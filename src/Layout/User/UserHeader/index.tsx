@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import travelLogo from "../../../assets/jobbyLogo.png";
-import { FC, memo, useEffect, useState } from "react";
+import { memo } from "react";
 
 const UserHeader: React.FC = () => {
   const location = useLocation();
@@ -45,7 +44,7 @@ const UserHeader: React.FC = () => {
             to="/login"
             className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600"
           >
-            Login
+            Đăng nhập
           </Link>
         )}
       </div>
