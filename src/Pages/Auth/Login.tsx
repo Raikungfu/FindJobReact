@@ -1,8 +1,9 @@
 import React from "react";
+import GoogleIcon from "../../assets/google-icon.png";
 
 const Login: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className=" pt-20 min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-3xl font-bold mb-4 text-gray-800 text-center">
           Đăng nhập tài khoản của bạn
@@ -63,21 +64,17 @@ const Login: React.FC = () => {
         </form>
 
         <div className="text-center my-4 text-gray-500">
-          hoặc đăng ký tài đây
+          hoặc đăng ký tại đây
         </div>
 
         <button className="w-full py-3 flex items-center justify-center border rounded-lg text-gray-700 hover:bg-gray-100">
-          <img
-            src="path/to/google-icon.png"
-            alt="Google Icon"
-            className="h-5 w-5 mr-2"
-          />
+          <img src={GoogleIcon} alt="Google Icon" className="h-5 w-5 mr-2" />
           Đăng nhập bằng Google
         </button>
 
         <div className="text-center mt-6">
           Bạn chưa có tài khoản?{" "}
-          <a href="#" className="text-green-500 hover:underline">
+          <a href="/register" className="text-green-500 hover:underline">
             Đăng ký ngay!
           </a>
         </div>

@@ -17,7 +17,7 @@ const UserHeader: React.FC = () => {
           <Link to="/" className="text-green-600 font-semibold">
             Trang chủ
           </Link>
-          <Link to="/tim-cong-viec" className="hover:text-green-500">
+          <Link to="/find-job" className="hover:text-green-500">
             Tìm công việc
           </Link>
           <Link to="/phan-loai" className="hover:text-green-500">
@@ -34,7 +34,7 @@ const UserHeader: React.FC = () => {
         {/* Find Job Button */}
         {location.pathname === "/" ? (
           <Link
-            to="/tim-cong-viec"
+            to="/find-job"
             className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600"
           >
             Tìm công việc <span aria-hidden="true">✈️</span>
