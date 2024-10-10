@@ -1,13 +1,48 @@
 import React, { useState } from "react";
 import GoogleIcon from "../../assets/google-icon.png";
+import { API_REGISTER } from "../../Service/AuthAPI";
+import { useNavigate } from "react-router-dom";
+
+interface Register_Response {
+  Message?: string;
+  Status?: number;
+  Token?: string;
+  User?: {
+    Email?: string;
+    FullName?: string;
+    Role?: string;
+  };
+}
+
 const Register: React.FC = () => {
   const [role, setRole] = useState("jobSeeker");
+  const nav = useNavigate();
 
   const handleRoleChange = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
     setRole(e.target.value);
   };
+
+  const RegisterHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(e.currentTarget);
+    try {
+      const formData = new FormData(e.currentTarget);
+      const response = (await API_REGISTER(
+        formData
+      )) as unknown as Register_Response;
+      if (response) {
+        alert(response.Message);
+        if (response.Status === 200) {
+          nav("/login");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="pt-20 min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
@@ -18,32 +53,68 @@ const Register: React.FC = () => {
           Chào mừng bạn đã quay trở lại với JOBBY!
         </p>
 
-        <form>
+        <form onSubmit={RegisterHandler}>
+          <div className="flex flex-row gap-2">
+            <div className="mb-4">
+              <label
+                htmlFor="LastName"
+                className="block text-gray-700 font-medium mb-2"
+              >
+                Họ*
+              </label>
+              <input
+                type="text"
+                id="LastName"
+                name="LastName"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                placeholder="Nhập họ của bạn"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="FirstName"
+                className="block text-gray-700 font-medium mb-2"
+              >
+                Tên*
+              </label>
+              <input
+                type="text"
+                id="FirstName"
+                name="FirstName"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                placeholder="Nhập tên của bạn"
+              />
+            </div>
+          </div>
+
           <div className="mb-4">
             <label
-              htmlFor="fullName"
+              htmlFor="Username"
               className="block text-gray-700 font-medium mb-2"
             >
-              Họ và tên*
+              Tên đăng nhập*
             </label>
             <input
               type="text"
-              id="fullName"
+              id="Username"
+              name="Username"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Nhập tên đầy đủ của bạn"
+              placeholder="Enter your username"
             />
           </div>
 
           <div className="mb-4">
             <label
-              htmlFor="email"
+              htmlFor="Email"
               className="block text-gray-700 font-medium mb-2"
             >
               Địa chỉ Email*
             </label>
             <input
               type="email"
-              id="email"
+              id="Email"
+              name="Email"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Enter your email id"
             />
@@ -54,16 +125,19 @@ const Register: React.FC = () => {
 
           <div className="mb-4">
             <label
-              htmlFor="password"
+              htmlFor="Password"
               className="block text-gray-700 font-medium mb-2"
             >
               Password*
             </label>
             <input
               type="password"
-              id="password"
+              id="Password"
+              name="Password"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="(Minimum 6 characters)"
+              minLength={6}
+              required
             />
             <small className="text-green-500 cursor-pointer">
               Remember your password
@@ -79,7 +153,8 @@ const Register: React.FC = () => {
             </label>
             <input
               type="tel"
-              id="mobile"
+              id="Phone"
+              name="Phone"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Enter your mobile number"
             />
@@ -94,9 +169,10 @@ const Register: React.FC = () => {
             <div className="flex space-x-4">
               <label className="flex items-center">
                 <input
+                  name="UserType"
                   type="radio"
-                  value="jobSeeker"
-                  checked={role === "jobSeeker"}
+                  value="Employee"
+                  checked={role === "Employee"}
                   onChange={handleRoleChange}
                   className="mr-2"
                 />
@@ -104,9 +180,10 @@ const Register: React.FC = () => {
               </label>
               <label className="flex items-center">
                 <input
+                  name="UserType"
                   type="radio"
-                  value="employer"
-                  checked={role === "employer"}
+                  value="Employer"
+                  checked={role === "Employer"}
                   onChange={handleRoleChange}
                   className="mr-2"
                 />
@@ -122,7 +199,10 @@ const Register: React.FC = () => {
             </label>
           </div>
 
-          <button className="w-full py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition duration-300">
+          <button
+            className="w-full py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition duration-300"
+            type="submit"
+          >
             Register now
           </button>
         </form>

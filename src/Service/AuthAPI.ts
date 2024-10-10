@@ -1,9 +1,9 @@
-/*import { AxiosError } from "axios";
-import AxiosApi from "../Config/axios";
-import { errorData, FormDataOrOther } from "../Type/constant";
+import { AxiosError } from "axios";
+import AxiosApi from "../Configs/axios";
+import { errorData, FormDataOrOther } from "../Types/constant";
 
-export const API_INFO_COFFEE_SHOP = <T>(id: FormDataOrOther<T>): Promise<T> => {
-  return AxiosApi.get<T>(`/api/CoffeeShops/Details/${id}`)
+export const API_LOGIN = <T>(formData: FormDataOrOther<T>): Promise<T> => {
+  return AxiosApi.post<T>(`/api/Auth/Login`, formData)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -18,7 +18,23 @@ export const API_INFO_COFFEE_SHOP = <T>(id: FormDataOrOther<T>): Promise<T> => {
     });
 };
 
+export const API_REGISTER = <T>(formData: FormDataOrOther<T>): Promise<T> => {
+  return AxiosApi.post<T>(`/api/Auth/Register`, formData)
+    .then((response) => {
+      if (response.data) {
+        return response.data;
+      } else {
+        const error = response.error as AxiosError;
+        const x = error.response?.data as errorData;
+        throw new Error(x.error || "Input not correct!");
+      }
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
+/*
 export const API_GET_MENU_BY_SHOPID = <T>(
   data: FormDataOrOther<T>
 ): Promise<T> => {
