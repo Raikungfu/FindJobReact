@@ -1,7 +1,54 @@
 import React from "react";
 import GoogleIcon from "../../assets/google-icon.png";
+import { API_LOGIN } from "../../Service/AuthAPI";
+
+interface Login_Response {
+  Token?: string;
+  Message?: string;
+
+  User: {
+    Avt?: string;
+    Name?: string;
+    UserType?: string;
+    Username?: string;
+  };
+}
 
 const Login: React.FC = () => {
+  const LoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(e.currentTarget);
+    try {
+      const formData = new FormData(e.currentTarget);
+      const response = (await API_LOGIN(formData)) as unknown as Login_Response;
+      if (response) {
+        alert(response.Message);
+        if (response.Token) {
+          localStorage.setItem("Token", response.Token);
+          localStorage.setItem("User", JSON.stringify(response.User));
+          window.location.href = "/";
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const togglePassword = () => {
+    const password = document.getElementById("Password") as HTMLInputElement;
+    const togglePassword = document.getElementById(
+      "togglePassword"
+    ) as HTMLSpanElement;
+
+    if (password.type === "password") {
+      password.type = "text";
+      togglePassword.textContent = "Ẩn";
+    } else {
+      password.type = "password";
+      togglePassword.textContent = "Hiện";
+    }
+  };
+
   return (
     <div className=" pt-20 min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
@@ -12,19 +59,20 @@ const Login: React.FC = () => {
           Chào mừng bạn đã quay trở lại với JOBBY!
         </p>
 
-        <form>
+        <form onSubmit={LoginHandler}>
           <div className="mb-4">
             <label
               htmlFor="email"
               className="block text-gray-700 font-medium mb-2"
             >
-              Email ID / Tên người dùng
+              Email ID/Tên người dùng
             </label>
             <input
-              type="email"
-              id="email"
+              type="text"
+              name="Username"
+              id="Username"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Email"
+              placeholder="Email/Username"
             />
           </div>
 
@@ -35,15 +83,22 @@ const Login: React.FC = () => {
             >
               Mật khẩu
             </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Nhập mật khẩu"
-            />
-            <span className="absolute inset-y-0 right-3 flex items-center text-green-500 cursor-pointer">
-              Hiện
-            </span>
+            <div className="relative w-full">
+              <input
+                type="password"
+                id="Password"
+                name="Password"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                placeholder="Nhập mật khẩu"
+              />
+              <span
+                className="absolute inset-y-0 right-3 flex items-center text-green-500 cursor-pointer"
+                id="togglePassword"
+                onClick={togglePassword}
+              >
+                Hiện
+              </span>
+            </div>
           </div>
 
           <div className="flex items-center justify-between mb-4">
@@ -58,7 +113,10 @@ const Login: React.FC = () => {
             </a>
           </div>
 
-          <button className="w-full py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition duration-300">
+          <button
+            className="w-full py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition duration-300"
+            type="submit"
+          >
             Đăng nhập
           </button>
         </form>
