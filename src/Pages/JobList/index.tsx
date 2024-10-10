@@ -5,30 +5,6 @@ import { JobList_Response } from "../../Types/job";
 import { JobType } from "../../Types/constant";
 import dayjs from "dayjs";
 
-const jobs = [
-  {
-    id: 1,
-    title: "Technical Support Specialist",
-    type: "PART-TIME",
-    salary: "20,000 INR - 25,000 INR",
-    company: "Google Inc.",
-    location: "New Delhi, India",
-    applicants: "10+ applicants",
-    companyLogo: "google-logo.png",
-  },
-  {
-    id: 2,
-    title: "Senior UI/UX Designer",
-    type: "FULL-TIME",
-    salary: "30,000 - 55,000",
-    company: "Apple",
-    location: "Boston, USA",
-    applicants: "9+ applicants",
-    companyLogo: "apple-logo.png",
-  },
-  // Add more jobs as needed
-];
-
 const JobList: React.FC = () => {
   const location = useLocation();
   const [jobs, setJobs] = useState<JobList_Response[]>([]);
@@ -45,6 +21,7 @@ const JobList: React.FC = () => {
       })) as unknown as JobList_Response[];
       if (searchJobs) {
         setJobs(searchJobs);
+        setSearch("");
       }
     };
     fetchData();
