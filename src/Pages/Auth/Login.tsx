@@ -3,10 +3,15 @@ import GoogleIcon from "../../assets/google-icon.png";
 import { API_LOGIN } from "../../Service/AuthAPI";
 
 interface Login_Response {
-  Avt?: string;
-  Email?: string;
-  Name?: string;
   Token?: string;
+  Message?: string;
+
+  User: {
+    Avt?: string;
+    Name?: string;
+    UserType?: string;
+    Username?: string;
+  };
 }
 
 const Login: React.FC = () => {
@@ -17,7 +22,12 @@ const Login: React.FC = () => {
       const formData = new FormData(e.currentTarget);
       const response = (await API_LOGIN(formData)) as unknown as Login_Response;
       if (response) {
-        console.log(response);
+        alert(response.Message);
+        if (response.Token) {
+          localStorage.setItem("Token", response.Token);
+          localStorage.setItem("User", JSON.stringify(response.User));
+          window.location.href = "/";
+        }
       }
     } catch (error) {
       console.error(error);

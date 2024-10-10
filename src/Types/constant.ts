@@ -14,3 +14,10 @@ export interface errorData {
   error?: string;
   status?: number;
 }
+
+export enum JobType {
+  FullTime,
+  PartTime,
+  Contract,
+  Internship,
+}
