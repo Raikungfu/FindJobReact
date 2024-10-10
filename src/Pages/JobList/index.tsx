@@ -3,10 +3,11 @@ import React from "react";
 const jobs = [
   {
     id: 1,
-    title: "Technical Support Specialist",
+    title: "Giặt rửa chăn nệm",
     type: "PART-TIME",
     salary: "20,000 INR - 25,000 INR",
     company: "Google Inc.",
+    typeJob: "Dọn dẹp",
     location: "New Delhi, India",
     applicants: "10+ applicants",
     companyLogo: "google-logo.png",
