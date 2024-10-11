@@ -15,14 +15,7 @@ interface Register_Response {
 }
 
 const Register: React.FC = () => {
-  const [role, setRole] = useState("jobSeeker");
   const nav = useNavigate();
-
-  const handleRoleChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setRole(e.target.value);
-  };
 
   const RegisterHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -172,8 +165,6 @@ const Register: React.FC = () => {
                   name="UserType"
                   type="radio"
                   value="Employee"
-                  checked={role === "Employee"}
-                  onChange={handleRoleChange}
                   className="mr-2"
                 />
                 Người tìm việc
@@ -183,8 +174,6 @@ const Register: React.FC = () => {
                   name="UserType"
                   type="radio"
                   value="Employer"
-                  checked={role === "Employer"}
-                  onChange={handleRoleChange}
                   className="mr-2"
                 />
                 Người tuyển dụng
