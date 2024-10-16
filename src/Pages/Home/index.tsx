@@ -122,7 +122,7 @@ const Home: React.FC = () => {
           {featuredJobs.map((job) => (
             <div key={job.JobId} className="border rounded-lg p-8 shadow-md">
               <div className="flex items-center mb-4">
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 max-w-20">
                   <img
                     src={job.CompanyLogo}
                     alt={job.Title}

@@ -5,7 +5,7 @@ const UserHeader: React.FC = () => {
   const location = useLocation();
   return (
     <header className="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
-      <div className="container mx-auto flex justify-between items-center p-4">
+      <div className="container mx-auto flex justify-between items-center p-4 px-[10%]">
         {/* Logo Section */}
         <div className="flex items-center">
           {/* <img src={travelLogo} alt="Jobby Logo" className="h-10 mr-4" /> */}

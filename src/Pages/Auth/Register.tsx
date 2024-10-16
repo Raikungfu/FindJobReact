@@ -15,7 +15,7 @@ interface Register_Response {
 }
 
 const Register: React.FC = () => {
-  const [role, setRole] = useState("jobSeeker");
+  const [role, setRole] = useState("Employee");
   const nav = useNavigate();
 
   const handleRoleChange = (e: {

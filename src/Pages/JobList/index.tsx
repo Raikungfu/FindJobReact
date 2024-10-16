@@ -9,7 +9,7 @@ const JobList: React.FC = () => {
   const location = useLocation();
   const [jobs, setJobs] = useState<JobList_Response[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [search, setSearch] = useState(location.state || {});
+  const [search, setSearch] = useState(location.state?.search || {});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
