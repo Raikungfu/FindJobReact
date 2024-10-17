@@ -3,6 +3,7 @@ import { API_GET_JOB_CATEGORIES, API_POST_JOB } from "../../Service/JobAPI"; // 
 import { useNavigate } from "react-router-dom";
 import { JobCategory_Response } from "../../Types/job";
 import useUser from "../../Hooks/useUser";
+import { JobLocation } from "../../Types/constant";
 
 interface PostJobForm {
   title: string;
@@ -13,6 +14,7 @@ interface PostJobForm {
   jobType: string;
   jobCategoryId: number;
   employerId: number;
+  location: string;
 }
 
 const PostJob: React.FC = () => {
@@ -25,6 +27,7 @@ const PostJob: React.FC = () => {
     jobType: "FullTime",
     jobCategoryId: 0,
     employerId: 0,
+    location: "",
   });
   console.log(formData);
   const navigate = useNavigate();
@@ -35,7 +38,8 @@ const PostJob: React.FC = () => {
   );
   const { user, loading, error: userError } = useUser();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -75,6 +79,8 @@ const PostJob: React.FC = () => {
       [name]:
         name === "salary" || name === "jobCategoryId"
           ? parseFloat(value)
+          : value in JobLocation
+          ? value
           : value,
     }));
   };
@@ -83,16 +89,15 @@ const PostJob: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    if (!formData.employerId) {
-      setError("Employer information is missing.");
+    if (!user || !formData.employerId) {
+      setShowLoginPrompt(true);
       setIsSubmitting(false);
       return;
     }
     try {
       const response = await API_POST_JOB<PostJobForm>(formData);
       if (response) {
-        alert("Job posted successfully!");
-        navigate("/jobs");
+        setShowSuccessPopup(true);
       }
     } catch (error) {
       console.error(error);
@@ -101,8 +106,14 @@ const PostJob: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+  const handleLoginRedirect = () => {
+    navigate("/login");
+  };
+  const handleHomeRedirect = () => {
+    setShowSuccessPopup(false);
+    navigate("/");
+  };
   if (loading) return <div>Loading...</div>;
-  if (userError || !user) return <div>Error loading user profile</div>;
   return (
     <div className="pt-20 min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
@@ -151,6 +162,7 @@ const PostJob: React.FC = () => {
               onChange={handleChange}
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Nhập mô tả công việc"
+              rows={5}
             />
           </div>
 
@@ -161,16 +173,21 @@ const PostJob: React.FC = () => {
             >
               Mức lương*
             </label>
-            <input
-              type="number"
-              id="salary"
-              name="salary"
-              value={formData.salary}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Nhập mức lương"
-              required
-            />
+            <div className="relative">
+              <input
+                type="number"
+                id="salary"
+                name="salary"
+                value={formData.salary}
+                onChange={handleChange}
+                className="w-full p-3 pr-16 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                placeholder="Nhập mức lương"
+                required
+              />
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+                VND
+              </span>
+            </div>
           </div>
 
           <div className="mb-4">
@@ -208,7 +225,25 @@ const PostJob: React.FC = () => {
               required
             />
           </div>
-
+          <div className="mb-4">
+            <label
+              htmlFor="location"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Địa điểm*
+            </label>
+            <select
+              name="location"
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-50"
+              onChange={handleChange}
+            >
+              {Object.entries(JobLocation).map(([key, value]) => (
+                <option key={key} value={key}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="mb-4">
             <label
               htmlFor="jobType"
@@ -266,6 +301,38 @@ const PostJob: React.FC = () => {
             {isSubmitting ? "Đang đăng..." : "Đăng bài"}
           </button>
         </form>
+        {/* Success popup */}
+        {showSuccessPopup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
+              <h2 className="text-xl font-semibold text-center mb-4">
+                Đăng bài tuyển dụng thành công!
+              </h2>
+              <button
+                onClick={handleHomeRedirect}
+                className="bg-green-500 text-white w-full py-2 rounded-lg font-semibold hover:bg-green-600"
+              >
+                Trở về trang chủ
+              </button>
+            </div>
+          </div>
+        )}
+        {/* Modal or alert prompting user to log in */}
+        {showLoginPrompt && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
+              <h2 className="text-xl font-semibold text-center mb-4">
+                Bạn phải đăng nhập để đăng bài tuyển dụng
+              </h2>
+              <button
+                onClick={handleLoginRedirect}
+                className="bg-green-500 text-white w-full py-2 rounded-lg font-semibold hover:bg-green-600"
+              >
+                Đăng nhập
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

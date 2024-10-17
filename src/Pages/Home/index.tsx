@@ -67,7 +67,7 @@ const Home: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    nav("/find-job", { state: { search: "search" } });
+    nav("/tim-cong-viec", { state: { search: "search" } });
     console.log(e.currentTarget);
   };
 
@@ -113,7 +113,10 @@ const Home: React.FC = () => {
       <div className="mt-20 px-10">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-4xl font-bold text-gray-800">Việc làm nổi bật</h2>
-          <a href="/all-jobs" className="text-green-600 font-semibold text-lg">
+          <a
+            href="/tim-cong-viec"
+            className="text-green-600 font-semibold text-lg"
+          >
             View All &rarr;
           </a>
         </div>

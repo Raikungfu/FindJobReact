@@ -28,14 +28,11 @@ const UserHeader: React.FC = () => {
           <Link to="/" className="text-green-600 font-semibold">
             Trang chủ
           </Link>
-          <Link to="/find-job" className="hover:text-green-500">
+          <Link to="/tim-cong-viec" className="hover:text-green-500">
             Tìm công việc
           </Link>
-          <Link to="/phan-loai" className="hover:text-green-500">
-            Phân loại
-          </Link>
-          <Link to="/nguoi-tuyen-dung" className="hover:text-green-500">
-            Người tuyển dụng
+          <Link to="/dang-tim-viec" className="hover:text-green-500">
+            Đăng công việc
           </Link>
           <Link to="/ve-chung-toi" className="hover:text-green-500">
             Về chúng tôi

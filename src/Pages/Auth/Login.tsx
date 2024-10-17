@@ -21,16 +21,20 @@ const Login: React.FC = () => {
     try {
       const formData = new FormData(e.currentTarget);
       const response = (await API_LOGIN(formData)) as unknown as Login_Response;
-      if (response) {
-        alert(response.Message);
-        if (response.Token) {
-          localStorage.setItem("Token", response.Token);
-          localStorage.setItem("User", JSON.stringify(response.User));
-          window.location.href = "/";
-        }
+      if (response && response.Token) {
+        alert(response.Message || "Đăng nhập thành công!");
+        localStorage.setItem("Token", response.Token);
+        localStorage.setItem("User", JSON.stringify(response.User));
+        window.location.href = "/";
+      } else {
+        alert(
+          response.Message ||
+            "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập."
+        );
       }
     } catch (error) {
-      console.error(error);
+      console.error("Lỗi đăng nhập:", error);
+      alert("Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.");
     }
   };
 

@@ -27,7 +27,7 @@ const Register: React.FC = () => {
       )) as unknown as Register_Response;
       if (response) {
         alert(response.Message);
-        if (response.Status === 200) {
+        if (response.Status === 200 || response.Status === 201) {
           nav("/login");
         }
       }
