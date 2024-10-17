@@ -10,6 +10,7 @@ const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    Authorization: "Bearer " + localStorage.getItem("Token"),
   },
 });
 
@@ -33,7 +34,7 @@ const AxiosApi = {
   post: async <T>(url: string, data: T): Promise<AxiosApiResponse<T>> => {
     try {
       const response = await api.post<T>(url, data);
-      if (response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         return { data: response.data, error: null };
       } else {
         return { data: null, error: null };

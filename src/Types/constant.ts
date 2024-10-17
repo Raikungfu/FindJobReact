@@ -16,8 +16,8 @@ export interface errorData {
 }
 
 export enum JobType {
-  FullTime,
-  PartTime,
-  Contract,
-  Internship,
+  FullTime = "FullTime",
+  PartTime = "PartTime",
+  Contract = "Contract",
+  Internship = "Internship",
 }

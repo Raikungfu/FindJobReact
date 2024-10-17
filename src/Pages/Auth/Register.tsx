@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import GoogleIcon from "../../assets/google-icon.png";
 import { API_REGISTER } from "../../Service/AuthAPI";
 import { useNavigate } from "react-router-dom";
