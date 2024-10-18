@@ -7,27 +7,13 @@ import { JobCategory_Response, JobList_Response } from "../../Types/job";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../../../node_modules/swiper/swiper-bundle.min.css";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 const Home: React.FC = () => {
   const nav = useNavigate();
   const [featuredJobs, setFeaturedJobs] = useState<JobList_Response[]>([]);
   const [jobCategories, setJobCategories] = useState<JobCategory_Response[]>(
     []
   );
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const pageSize = 8;
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => {
-      const newIndex = prevIndex + 2; // Tăng chỉ số lên 2 để di chuyển 2 category mới
-      return newIndex >= jobCategories.length ? 0 : newIndex; // Nếu vượt quá, quay lại vị trí đầu tiên
-    });
-  };
-
-  const visibleCategories = jobCategories.slice(
-    currentIndex,
-    currentIndex + pageSize
-  );
-
   // const blogs = [
   //   {
   //     imgSrc:
