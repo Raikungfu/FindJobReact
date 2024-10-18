@@ -1,6 +1,9 @@
 import React from "react";
 import GoogleIcon from "../../assets/google-icon.png";
 import { API_LOGIN } from "../../Service/AuthAPI";
+import { useError } from "../../Context/ErrorProvider";
+import { useSuccess } from "../../Context/SuccessProvider";
+import useUser from "../../Hooks/useUser";
 
 interface Login_Response {
   Token?: string;
@@ -15,26 +18,40 @@ interface Login_Response {
 }
 
 const Login: React.FC = () => {
+  const { setError } = useError();
+  const { setSuccess } = useSuccess();
+  const { setState } = useUser();
+
   const LoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.currentTarget);
     try {
       const formData = new FormData(e.currentTarget);
       const response = (await API_LOGIN(formData)) as unknown as Login_Response;
       if (response && response.Token) {
-        alert(response.Message || "Đăng nhập thành công!");
+        setSuccess(response.Message || "Đăng nhập thành công!");
         localStorage.setItem("Token", response.Token);
         localStorage.setItem("User", JSON.stringify(response.User));
-        window.location.href = "/";
+        setState((prevState) => ({
+          ...prevState,
+          user: response.User || null,
+          loading: false,
+          error: null,
+        }));
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 5000);
       } else {
-        alert(
+        setError(
           response.Message ||
             "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập."
         );
       }
     } catch (error) {
-      console.error("Lỗi đăng nhập:", error);
-      alert("Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.");
+      }
     }
   };
 

@@ -1,30 +1,29 @@
-import { useEffect, useState } from 'react';
-interface User {
-      UserId: number;
-      UserType: string;
-      UserName?: string;
-      FullName?: string;
-      Avt?: string;
-  }
-  interface UserState {
-    user: User | null;
-    loading: boolean;
-    error: string | null;
-  }
+import { useEffect, useState } from "react";
+export interface User {
+  Avt?: string;
+  Name?: string;
+  UserType?: string;
+  Username?: string;
+}
+interface UserState {
+  user: User | null;
+  loading: boolean;
+  error: string | null;
+}
 const useUser = () => {
-    const [state, setState] = useState<UserState>({
-        user: null,
-        loading: true,
-        error: null,
-      });
+  const [state, setState] = useState<UserState>({
+    user: null,
+    loading: true,
+    error: null,
+  });
 
   useEffect(() => {
     // const fetchUserProfile = async () => {
     //   try {
-    //     const token = localStorage.getItem('Token'); 
+    //     const token = localStorage.getItem('Token');
     //     const response = await axios.get('/api/profile', {
     //       headers: {
-    //         Authorization: `Bearer ${token}`, 
+    //         Authorization: `Bearer ${token}`,
     //       },
     //     });
     //     setUser(response.data);
@@ -35,9 +34,9 @@ const useUser = () => {
     //     setLoading(false);
     //   }
     // };
-
     // fetchUserProfile();
     //   }, []);
+
     const user = JSON.parse(localStorage.getItem("User") || "null");
     setState({ user, loading: false, error: null });
   }, []);
@@ -45,10 +44,10 @@ const useUser = () => {
   const logout = () => {
     localStorage.removeItem("User");
     localStorage.removeItem("Token");
-    setState({ user: null, loading: false, error: null }); 
+    setState({ user: null, loading: false, error: null });
   };
 
-  return { ...state, logout }; 
+  return { ...state, logout, setState };
 };
 
 export default useUser;

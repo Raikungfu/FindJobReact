@@ -56,7 +56,6 @@ const PostJob: React.FC = () => {
     if (user && user.UserType === "Employer") {
       setFormData((prev) => ({
         ...prev,
-        employerId: user.UserId,
       }));
     }
   }, [user]);

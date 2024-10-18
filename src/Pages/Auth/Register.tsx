@@ -2,6 +2,8 @@ import React from "react";
 import GoogleIcon from "../../assets/google-icon.png";
 import { API_REGISTER } from "../../Service/AuthAPI";
 import { useNavigate } from "react-router-dom";
+import { useError } from "../../Context/ErrorProvider";
+import { useSuccess } from "../../Context/SuccessProvider";
 
 export interface Register_Response {
   Message?: string;
@@ -16,6 +18,8 @@ export interface Register_Response {
 
 const Register: React.FC = () => {
   const nav = useNavigate();
+  const { setError } = useError();
+  const { setSuccess } = useSuccess();
 
   const RegisterHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,10 +30,16 @@ const Register: React.FC = () => {
         formData
       )) as unknown as Register_Response;
       if (response) {
-        alert(response.Message);
+        setSuccess(response.Message || "Đăng ký thành công!");
         nav("/login");
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
+    }
   };
 
   return (
