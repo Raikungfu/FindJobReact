@@ -3,7 +3,7 @@ import GoogleIcon from "../../assets/google-icon.png";
 import { API_REGISTER } from "../../Service/AuthAPI";
 import { useNavigate } from "react-router-dom";
 
-interface Register_Response {
+export interface Register_Response {
   Message?: string;
   Status?: number;
   Token?: string;
@@ -27,13 +27,9 @@ const Register: React.FC = () => {
       )) as unknown as Register_Response;
       if (response) {
         alert(response.Message);
-        if (response.Status === 200 || response.Status === 201) {
-          nav("/login");
-        }
+        nav("/login");
       }
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   return (

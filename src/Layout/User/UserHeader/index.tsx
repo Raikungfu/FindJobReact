@@ -77,7 +77,7 @@ const UserHeader: React.FC = () => {
           </div>
         ) : location.pathname === "/" ? (
           <Link
-            to="/find-job"
+            to="/tim-cong-viec"
             className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600"
           >
             Tìm công việc <span aria-hidden="true">✈️</span>
