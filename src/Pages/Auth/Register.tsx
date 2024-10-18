@@ -99,7 +99,7 @@ const Register: React.FC = () => {
               id="Username"
               name="Username"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Enter your username"
+              placeholder="Nhập tên đăng nhập của bạn"
             />
           </div>
 
@@ -115,10 +115,10 @@ const Register: React.FC = () => {
               id="Email"
               name="Email"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Enter your email id"
+              placeholder="Nhập địa chỉ email của bạn"
             />
             <small className="text-gray-500">
-              Job notifications will be sent to this email id
+              Thông báo việc làm sẽ được gửi đến email này
             </small>
           </div>
 
@@ -127,20 +127,17 @@ const Register: React.FC = () => {
               htmlFor="Password"
               className="block text-gray-700 font-medium mb-2"
             >
-              Password*
+              Mật khẩu*
             </label>
             <input
               type="password"
               id="Password"
               name="Password"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="(Minimum 6 characters)"
+              placeholder="(Tối thiểu 6 ký tự)"
               minLength={6}
               required
             />
-            <small className="text-green-500 cursor-pointer">
-              Remember your password
-            </small>
           </div>
 
           <div className="mb-4">
@@ -148,17 +145,17 @@ const Register: React.FC = () => {
               htmlFor="mobile"
               className="block text-gray-700 font-medium mb-2"
             >
-              Mobile number*
+              Số điện thoại*
             </label>
             <input
               type="tel"
               id="Phone"
               name="Phone"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Enter your mobile number"
+              placeholder="Nhập số điện thoại của bạn"
             />
             <small className="text-gray-500">
-              Recruiters will contact you on this number
+              Người tuyển dụng sẽ liên lạc với bạn qua số này
             </small>
           </div>
           <div className="mb-7">
@@ -186,35 +183,35 @@ const Register: React.FC = () => {
               </label>
             </div>
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <input type="checkbox" id="promotions" className="mr-2" />
             <label htmlFor="promotions" className="text-gray-700">
-              Send me important updates & promotions via SMS, email, and{" "}
-              <span className="text-green-500">WhatsApp</span>
+              Gửi cho tôi những thông tin cập nhật và khuyến mãi quan trọng qua
+              SMS và mail
             </label>
-          </div>
+          </div> */}
 
           <button
             className="w-full py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition duration-300"
             type="submit"
           >
-            Register now
+            Đăng ký ngay
           </button>
         </form>
 
         <p className="text-center mt-6 text-gray-500 text-sm">
-          By clicking Register, you agree to the{" "}
+          Khi nhấp vào Đăng ký, bạn đồng ý với{" "}
           <a href="#" className="text-green-500 hover:underline">
-            Terms and Conditions
+            Điều khoản và Điều kiện
           </a>{" "}
           &{" "}
           <a href="#" className="text-green-500 hover:underline">
-            Privacy Policy
+            Chính sách Bảo mật
           </a>{" "}
-          of AlwaysApply.com
+          của Jobby
         </p>
 
-        <div className="text-center my-4">or signup with</div>
+        <div className="text-center my-4">hoặc đăng nhập với</div>
 
         <div className="flex justify-center space-x-4">
           <button className="border p-3 rounded-lg hover:bg-gray-100">
