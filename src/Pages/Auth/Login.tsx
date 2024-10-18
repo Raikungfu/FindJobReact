@@ -28,7 +28,7 @@ const Login: React.FC = () => {
       const formData = new FormData(e.currentTarget);
       const response = (await API_LOGIN(formData)) as unknown as Login_Response;
       if (response && response.Token) {
-        setSuccess(response.Message || "Đăng nhập thành công!");
+        setSuccess("Chúc mừng bạn đăng nhập thành công nhé!");
         localStorage.setItem("Token", response.Token);
         localStorage.setItem("User", JSON.stringify(response.User));
         setState((prevState) => ({
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
       } else {
         setError(
           response.Message ||
-            "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập."
+            "Tiếc quá nhưng mà có sai sót gì rồi, bạn thử kiểm tra lại xem nhé :(("
         );
       }
     } catch (error) {

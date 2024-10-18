@@ -5,12 +5,27 @@ import { JobType } from "../../Types/constant";
 import dayjs from "dayjs";
 import { JobCategory_Response, JobList_Response } from "../../Types/job";
 import { useNavigate } from "react-router-dom";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "../../../node_modules/swiper/swiper-bundle.min.css";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 const Home: React.FC = () => {
   const nav = useNavigate();
   const [featuredJobs, setFeaturedJobs] = useState<JobList_Response[]>([]);
   const [jobCategories, setJobCategories] = useState<JobCategory_Response[]>(
     []
+  );
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const pageSize = 8;
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex + 2; // Tăng chỉ số lên 2 để di chuyển 2 category mới
+      return newIndex >= jobCategories.length ? 0 : newIndex; // Nếu vượt quá, quay lại vị trí đầu tiên
+    });
+  };
+
+  const visibleCategories = jobCategories.slice(
+    currentIndex,
+    currentIndex + pageSize
   );
 
   // const blogs = [
@@ -123,9 +138,12 @@ const Home: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredJobs.map((job) => (
-            <div key={job.JobId} className="border rounded-lg p-8 shadow-md">
+            <div
+              key={job.JobId}
+              className="border rounded-lg p-8 shadow-md h-full flex flex-col justify-between"
+            >
               <div className="flex items-center mb-4">
-                <div className="flex-shrink-0 max-w-20">
+                <div className="flex-shrink-0 max-w-24 flex flex-col items-center">
                   <img
                     src={
                       job.CompanyLogo ||
@@ -138,11 +156,17 @@ const Home: React.FC = () => {
                     {job.JobCategoryName}
                   </p>
                 </div>
-                <div className="ml-4">
-                  <h3 className="text-2xl font-semibold h-14 pt-2 ">
+                <div className="ml-4 overflow-hidden">
+                  <h3 className="text-2xl font-semibold h-14 pt-2 overflow-hidden whitespace-nowrap  max-w-full truncate ">
                     {job.Title}
                   </h3>
-                  <p className="text-gray-500 mt-2">{job.Salary}</p>
+                  <p className="text-gray-500 mt-2">
+                    {(job.Salary ?? 0).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      useGrouping: true,
+                    })}{" "}
+                    VND
+                  </p>
                   <p className="text-gray-500 mt-2">{JobType[job.JobType]}</p>
                 </div>
               </div>
@@ -167,23 +191,44 @@ const Home: React.FC = () => {
           <h2 className="text-2xl font-bold text-center mb-6">
             Các danh mục công việc
           </h2>
-          <div className="flex justify-center space-x-4">
+          <Swiper
+            speed={1500}
+            autoplay={{
+              delay: 2000,
+            }}
+            modules={[Autoplay]}
+            breakpoints={{
+              360: {
+                slidesPerView: 3,
+                spaceBetween: 5,
+              },
+              600: {
+                slidesPerView: 4,
+                spaceBetween: 5,
+              },
+              1200: {
+                slidesPerView: 8,
+                spaceBetween: 5,
+              },
+            }}
+          >
             {jobCategories.map((category, index) => (
-              <div
-                key={index}
-                className={`flex flex-col items-center justify-center border p-4 w-36 h-32 rounded-lg ${
-                  category.Selected ? "bg-green-500 text-white" : "bg-white"
-                }`}
-              >
-                <img
-                  src={category.Image}
-                  alt={category.JobCategoryDescription}
-                  className="h-10 w-10 mb-4 rounded-full"
-                />
-                <p>{category.JobCategoryName}</p>
-              </div>
+              <SwiperSlide key={index}>
+                <div
+                  className={`flex flex-col items-center justify-center border p-4 w-36 h-32 rounded-lg justify-between ${
+                    category.Selected ? "bg-green-500 text-white" : "bg-white"
+                  }`}
+                >
+                  <img
+                    src={category.Image}
+                    alt={category.JobCategoryDescription}
+                    className="h-10 w-10 mb-4 rounded-full"
+                  />
+                  <p>{category.JobCategoryName}</p>
+                </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </section>
 

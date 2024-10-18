@@ -69,7 +69,12 @@ const JobDetail = () => {
         <strong>Job Type:</strong> {job.JobType}
       </p>
       <p className="text-lg font-semibold mb-2">
-        <strong>Salary:</strong> {job.Salary.toLocaleString()} VND
+        <strong>Salary:</strong>{" "}
+        {(job.Salary ?? 0).toLocaleString("en-US", {
+          minimumFractionDigits: 0,
+          useGrouping: true,
+        })}{" "}
+        VND
       </p>
       <p className="text-lg font-semibold mb-2">
         <strong>Description:</strong>

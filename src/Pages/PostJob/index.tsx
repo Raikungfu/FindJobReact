@@ -29,17 +29,17 @@ const PostJob: React.FC = () => {
     employerId: 0,
     location: "",
   });
-  console.log(formData);
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [jobCategories, setJobCategories] = useState<JobCategory_Response[]>(
     []
   );
-  const { user, loading } = useUser();
+  const { user, loading, logout } = useUser();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isEmployee, setIsEmployee] = useState(false);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -57,6 +57,9 @@ const PostJob: React.FC = () => {
       setFormData((prev) => ({
         ...prev,
       }));
+    }
+    if (user && user.UserType === "Employee") {
+      setIsEmployee(user.UserType === "Employee");
     }
   }, [user]);
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -89,7 +92,13 @@ const PostJob: React.FC = () => {
     setIsSubmitting(true);
     setError(null);
     if (!user || !formData.employerId) {
-      setShowLoginPrompt(true);
+      if (isEmployee) {
+        setError(
+          "Bạn đang đăng nhập với tư cách là người tìm việc. Hãy đăng nhập lại với vai trò người tuyển dụng."
+        );
+      } else {
+        setShowLoginPrompt(true);
+      }
       setIsSubmitting(false);
       return;
     }
@@ -111,6 +120,10 @@ const PostJob: React.FC = () => {
   const handleHomeRedirect = () => {
     setShowSuccessPopup(false);
     navigate("/");
+  };
+  const handleLogoutAndRedirect = () => {
+    logout(); // Call logout method to clear user session
+    navigate("/login");
   };
   if (loading) return <div>Loading...</div>;
   return (
@@ -328,6 +341,22 @@ const PostJob: React.FC = () => {
                 className="bg-green-500 text-white w-full py-2 rounded-lg font-semibold hover:bg-green-600"
               >
                 Đăng nhập
+              </button>
+            </div>
+          </div>
+        )}
+        {/* Message for employee */}
+        {isEmployee && error && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
+              <h2 className="text-xl font-semibold text-center mb-4">
+                {error}
+              </h2>
+              <button
+                onClick={handleLogoutAndRedirect}
+                className="bg-green-500 text-white w-full py-2 rounded-lg font-semibold hover:bg-green-600"
+              >
+                Đăng nhập lại
               </button>
             </div>
           </div>

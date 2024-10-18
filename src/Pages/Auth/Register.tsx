@@ -30,7 +30,7 @@ const Register: React.FC = () => {
         formData
       )) as unknown as Register_Response;
       if (response) {
-        setSuccess(response.Message || "Đăng ký thành công!");
+        setSuccess("Chào mừng bạn đã trở thành một thành viên của Jobby nhé");
         nav("/login");
       }
     } catch (error) {

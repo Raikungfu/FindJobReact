@@ -113,7 +113,7 @@ const JobList: React.FC = () => {
           {jobs.map((job) => (
             <div
               key={job.JobId}
-              className="bg-white p-4 border rounded-lg shadow hover:shadow-lg transition-shadow"
+              className="bg-white p-4 border rounded-lg shadow hover:shadow-lg transition-shadow h-full flex flex-col justify-between"
             >
               <div className="flex items-center mb-4">
                 <img
@@ -124,9 +124,11 @@ const JobList: React.FC = () => {
                   alt={job.CompanyName}
                   className="h-10 w-10 rounded-full"
                 />
-                <div className="ml-4">
+                <div className="ml-4 overflow-hidden">
                   <h3 className="text-lg font-semibold">{job.Title}</h3>
-                  <p className="text-gray-500">{job.CompanyName}</p>
+                  <p className="text-gray-500  overflow-hidden whitespace-nowrap  max-w-full truncate ">
+                    {job.CompanyName}
+                  </p>
                 </div>
               </div>
               <div className="mb-2">
@@ -140,7 +142,14 @@ const JobList: React.FC = () => {
                   {job.JobType}
                 </span>
               </div>
-              <p className="text-gray-500 mb-2">Salary: {job.Salary}</p>
+              <p className="text-gray-500 mb-2">
+                Salary:{" "}
+                {(job.Salary ?? 0).toLocaleString("en-US", {
+                  minimumFractionDigits: 0,
+                  useGrouping: true,
+                })}{" "}
+                VND
+              </p>
               <p className="text-gray-500 mb-2">Location: {job.Location}</p>
               <div className="flex flex-row items-center justify-center mb-4">
                 <p className="text-gray-500">
