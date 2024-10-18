@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import AxiosApi from "../Configs/axios";
 import { errorData, FormDataOrOther } from "../Types/constant";
 
-// Gọi API lấy thông tin hồ sơ người dùng
 export const API_GET_USER_PROFILE = <T>(): Promise<T> => {
   return AxiosApi.get<T>(`/api/User/profile`)
     .then((response) => {
@@ -19,7 +18,6 @@ export const API_GET_USER_PROFILE = <T>(): Promise<T> => {
     });
 };
 
-// Gọi API lấy thông tin chi tiết nhân viên
 export const API_GET_EMPLOYEE_INFO = <T>(id: number): Promise<T> => {
   return AxiosApi.get<T>(`/api/Employee/${id}`)
     .then((response) => {
@@ -36,7 +34,6 @@ export const API_GET_EMPLOYEE_INFO = <T>(id: number): Promise<T> => {
     });
 };
 
-// Gọi API để cập nhật thông tin nhân viên
 export const API_UPDATE_EMPLOYEE = <T>(formData: FormDataOrOther<T>): Promise<T> => {
   return AxiosApi.put<T>(`/api/Employee/update`, formData)
     .then((response) => {

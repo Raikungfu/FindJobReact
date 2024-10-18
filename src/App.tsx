@@ -7,7 +7,6 @@ import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import PostJob from "./Pages/PostJob";
 import JobDetail from "./Pages/JobDetail";
-import Profile from "./Pages/Profile";
 
 const App = () => {
   return (
@@ -19,7 +18,6 @@ const App = () => {
         <Route path="dang-tim-viec" element={<PostJob />} />
         <Route path="register" element={<Register />} />
         <Route path="job/:jobId" element={<JobDetail />} />
-        <Route path="profile" element={<Profile />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

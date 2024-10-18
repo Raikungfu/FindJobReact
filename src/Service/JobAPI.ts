@@ -17,7 +17,7 @@ export const API_GET_JOBS = <T>(formData: FormDataOrOther<T>): Promise<T> => {
       throw error;
     });
 };
-export const API_COUNT_JOBS = <T>(formData: FormDataOrOther<T>): Promise<number> => {
+export const API_COUNT_JOBS = <T>(): Promise<number> => {
   return AxiosApi.get<T>(`/api/Job/count-jobs`)
     .then((response) => {
       if (response.data) {

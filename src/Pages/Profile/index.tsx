@@ -2,21 +2,29 @@ import React, { useEffect, useState } from "react";
 import {
   API_UPDATE_EMPLOYEE,
   API_GET_USER_PROFILE,
-} from "../../Service/UserAPI"; // Gọi API
+  API_GET_EMPLOYEE_INFO,
+} from "../../Service/UserAPI";
+import { useParams } from "react-router-dom";
 
 const Profile: React.FC = () => {
+  const { id } = useParams<{ id?: string }>();
   const [profile, setProfile] = useState<any>({});
   const [isEditing, setIsEditing] = useState(false);
   const [employeeData, setEmployeeData] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
-  // Lấy dữ liệu hồ sơ khi component render
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const profileData = await API_GET_USER_PROFILE(); // Lấy thông tin từ API
-        setProfile(profileData);
-        setEmployeeData(profileData); // Cho phép nhân viên chỉnh sửa
+        if (id) {
+          const employeeData = await API_GET_EMPLOYEE_INFO(Number(id));
+          setProfile(employeeData);
+          setEmployeeData(employeeData);
+        } else {
+          const profileData = await API_GET_USER_PROFILE();
+          setProfile(profileData);
+          setEmployeeData(profileData);
+        }
       } catch (error) {
         console.error("Lỗi khi lấy hồ sơ:", error);
       }
@@ -24,7 +32,6 @@ const Profile: React.FC = () => {
     fetchProfile();
   }, []);
 
-  // Xử lý khi thay đổi dữ liệu
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -35,7 +42,6 @@ const Profile: React.FC = () => {
     }));
   };
 
-  // Xử lý thay đổi file
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
     setEmployeeData((prevState: any) => ({
@@ -44,7 +50,6 @@ const Profile: React.FC = () => {
     }));
   };
 
-  // Lưu thông tin cập nhật
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -55,7 +60,7 @@ const Profile: React.FC = () => {
           formData.append(key, employeeData[key]);
         }
       }
-      await API_UPDATE_EMPLOYEE(formData); // Gửi yêu cầu PUT để cập nhật
+      await API_UPDATE_EMPLOYEE(formData);
       setIsEditing(false);
     } catch (error) {
       console.error("Lỗi khi cập nhật:", error);
@@ -108,12 +113,14 @@ const Profile: React.FC = () => {
                 className="w-24 h-24 mt-4"
               />
             )}
-            <button
-              className="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
-              onClick={() => setIsEditing(true)}
-            >
-              Chỉnh sửa
-            </button>
+            {!id && (
+              <button
+                className="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
+                onClick={() => setIsEditing(true)}
+              >
+                Chỉnh sửa
+              </button>
+            )}
           </div>
         ) : (
           <form onSubmit={handleSubmit}>

@@ -36,7 +36,7 @@ const PostJob: React.FC = () => {
   const [jobCategories, setJobCategories] = useState<JobCategory_Response[]>(
     []
   );
-  const { user, loading, error: userError } = useUser();
+  const { user, loading } = useUser();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);

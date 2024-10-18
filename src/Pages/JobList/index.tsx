@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_COUNT_JOBS, API_GET_JOBS } from "../../Service/JobAPI";
 import { JobList_Response } from "../../Types/job";
 import { JobType } from "../../Types/constant";
 import dayjs from "dayjs";
 
 const JobList: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [jobs, setJobs] = useState<JobList_Response[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,11 +16,7 @@ const JobList: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const fetchJobsCount = async () => {
     try {
-      const count = await API_COUNT_JOBS({
-        title,
-        location: locationSearch,
-        category,
-      });
+      const count = await API_COUNT_JOBS();
       setJobsCount(count);
     } catch (error) {
       console.error("Error fetching job count:", error);
