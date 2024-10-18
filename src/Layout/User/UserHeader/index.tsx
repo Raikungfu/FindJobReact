@@ -6,14 +6,13 @@ const UserHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { user, logout } = useUser();
+  const { user, logout } = useUser(); // Lấy thông tin user và hàm logout từ hook useUser
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
-
   return (
     <header className="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto flex justify-between items-center p-4 px-[10%]">

@@ -13,30 +13,30 @@ const Home: React.FC = () => {
     []
   );
 
-  const blogs = [
-    {
-      imgSrc:
-        "https://img.freepik.com/free-photo/toy-bricks-table_144627-48267.jpg",
-      title: "Lorem ipsum is placeholder text commonly used in the graphic...",
-      description:
-        "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web",
-    },
-    {
-      imgSrc:
-        "https://img.freepik.com/free-photo/toy-bricks-table_144627-48267.jpg",
-      title:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do...",
-      description:
-        "The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled",
-    },
-    {
-      imgSrc:
-        "https://img.freepik.com/free-photo/toy-bricks-table_144627-48267.jpg",
-      title: "Excepteur sint occaecat cupidatat non proident, sunt in...",
-      description:
-        "Parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
-    },
-  ];
+  // const blogs = [
+  //   {
+  //     imgSrc:
+  //       "https://img.freepik.com/free-photo/toy-bricks-table_144627-48267.jpg",
+  //     title: "Lorem ipsum is placeholder text commonly used in the graphic...",
+  //     description:
+  //       "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web",
+  //   },
+  //   {
+  //     imgSrc:
+  //       "https://img.freepik.com/free-photo/toy-bricks-table_144627-48267.jpg",
+  //     title:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do...",
+  //     description:
+  //       "The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled",
+  //   },
+  //   {
+  //     imgSrc:
+  //       "https://img.freepik.com/free-photo/toy-bricks-table_144627-48267.jpg",
+  //     title: "Excepteur sint occaecat cupidatat non proident, sunt in...",
+  //     description:
+  //       "Parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
+  //   },
+  // ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -187,7 +187,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-10">
+      {/* <section className="py-10">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl font-bold text-center mb-8">Về chúng tôi</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -216,7 +216,7 @@ const Home: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

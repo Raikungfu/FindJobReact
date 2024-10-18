@@ -56,7 +56,7 @@ const Profile: React.FC = () => {
     try {
       const formData = new FormData();
       for (const key in employeeData) {
-        if (employeeData[key]) {
+        if (employeeData[key] !== profile[key] && employeeData[key] !== null) {
           formData.append(key, employeeData[key]);
         }
       }
