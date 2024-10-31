@@ -4,7 +4,7 @@ import { API_LOGIN } from "../../Service/AuthAPI";
 import { useError } from "../../Context/ErrorProvider";
 import { useSuccess } from "../../Context/SuccessProvider";
 import useUser from "../../Hooks/useUser";
-
+import { Link } from "react-router-dom";
 interface Login_Response {
   Token?: string;
   Message?: string;
@@ -153,9 +153,9 @@ const Login: React.FC = () => {
 
         <div className="text-center mt-6">
           Bạn chưa có tài khoản?{" "}
-          <a href="/register" className="text-green-500 hover:underline">
+          <Link to="/register" className="text-green-500 hover:underline">
             Đăng ký ngay!
-          </a>
+          </Link>
         </div>
       </div>
     </div>

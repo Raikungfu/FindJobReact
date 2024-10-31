@@ -34,23 +34,21 @@ export const API_GET_EMPLOYEE_INFO = <T>(id: number): Promise<T> => {
     });
 };
 
-export const API_UPDATE_EMPLOYEE = <T>(formData: FormDataOrOther<T>): Promise<T> => {
-  return AxiosApi.put<T>(`/api/Employee/update`, formData)
-    .then((response) => {
-      if (response.data) {
-        return response.data;
-      } else {
-        const error = response.error as AxiosError;
-        const x = error.response?.data as errorData;
-        throw new Error(x.error || "Input not correct!");
-      }
-    })
-    .catch((error) => {
-      throw error;
-    });
+export const API_UPDATE_EMPLOYEE = async <T>(formData: FormDataOrOther<T>): Promise<T | null> => {
+  try {
+    const response = await AxiosApi.put<T>(`/api/Employee/update`, formData);
+    
+    if (response.data) {
+      return response.data;
+    } else {
+      throw new Error("No data received from the update API");
+    }
+  } catch (error) {
+    
+    return null; 
+  }
 };
 
-// Gọi API để lấy thông tin các thành viên
 export const API_GET_MEMBERS = <T>(): Promise<T> => {
   return AxiosApi.get<T>(`/api/User/members`)
     .then((response) => {

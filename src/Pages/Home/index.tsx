@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../../../node_modules/swiper/swiper-bundle.min.css";
 import { Autoplay } from "swiper/modules";
+import { applyForJob } from "../../utils/jobUtils";
 const Home: React.FC = () => {
   const nav = useNavigate();
   const [featuredJobs, setFeaturedJobs] = useState<JobList_Response[]>([]);
@@ -38,7 +39,14 @@ const Home: React.FC = () => {
   //       "Parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
   //   },
   // ];
-
+  const handleApply = async (jobId: number) => {
+    const success = await applyForJob(jobId);
+    if (success) {
+      alert("Application successful!");
+    } else {
+      alert("Application failed. Please try again.");
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       const fetchJobs = (await API_GET_JOBS({
@@ -165,7 +173,10 @@ const Home: React.FC = () => {
                   {dayjs(job.DateTo).format("DD/MM/YYYY")}
                 </p>
               </div>
-              <button className="w-full py-1.5 bg-green-600 font-semibold text-white rounded-full hover:bg-green-700 text-base ">
+              <button
+                className="w-full py-1.5 bg-green-600 font-semibold text-white rounded-full hover:bg-green-700 text-base "
+                onClick={() => handleApply(job.JobId)}
+              >
                 Ứng tuyển ngay
               </button>
             </div>

@@ -8,6 +8,7 @@ import Register from "./Pages/Auth/Register";
 import PostJob from "./Pages/PostJob";
 import JobDetail from "./Pages/JobDetail";
 import Profile from "./Pages/Profile";
+import ManageJobs from "./Pages/ManageJob";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="register" element={<Register />} />
         <Route path="job/:jobId" element={<JobDetail />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="/quan-ly-cong-viec" element={<ManageJobs />} />
         <Route path="profile/:id" element={<Profile />} />
         <Route path="*" element={<Page404 />} />
       </Route>

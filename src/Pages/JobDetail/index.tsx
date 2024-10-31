@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_GET_JOB_DETAIL } from "../../Service/JobAPI";
 import { useParams } from "react-router-dom";
+import { applyForJob } from "../../utils/jobUtils";
 interface JobDetail_Response {
   JobId: number;
   Title: string;
@@ -40,7 +41,14 @@ const JobDetail = () => {
 
     fetchJobDetail();
   }, [jobId]);
-
+  const handleApply = async (jobId: number) => {
+    const success = await applyForJob(jobId);
+    if (success) {
+      alert("Application successful!");
+    } else {
+      alert("Application failed. Please try again.");
+    }
+  };
   if (loading) {
     return <div className="text-center p-10">Loading...</div>;
   }
@@ -94,7 +102,10 @@ const JobDetail = () => {
 
       {/* Apply Now Button */}
       <div className="mt-6 flex justify-center">
-        <button className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300">
+        <button
+          className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
+          onClick={() => handleApply(job.JobId)}
+        >
           Ứng Tuyển Ngay
         </button>
       </div>

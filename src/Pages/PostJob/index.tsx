@@ -40,6 +40,8 @@ const PostJob: React.FC = () => {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isEmployee, setIsEmployee] = useState(false);
+  const userData = localStorage.getItem("User");
+  const parsedUser = userData ? JSON.parse(userData) : null;
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -87,11 +89,13 @@ const PostJob: React.FC = () => {
     }));
   };
 
+  console.log(parsedUser.UserType);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    if (!user || !formData.employerId) {
+
+    if (!user || parsedUser.UserType !== "Employer") {
       if (isEmployee) {
         setError(
           "Bạn đang đăng nhập với tư cách là người tìm việc. Hãy đăng nhập lại với vai trò người tuyển dụng."
@@ -122,7 +126,7 @@ const PostJob: React.FC = () => {
     navigate("/");
   };
   const handleLogoutAndRedirect = () => {
-    logout(); // Call logout method to clear user session
+    logout();
     navigate("/login");
   };
   if (loading) return <div>Loading...</div>;

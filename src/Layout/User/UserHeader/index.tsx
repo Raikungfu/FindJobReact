@@ -6,7 +6,7 @@ const UserHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { user, logout } = useUser(); // Lấy thông tin user và hàm logout từ hook useUser
+  const { user, logout } = useUser();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = () => {
@@ -65,6 +65,15 @@ const UserHeader: React.FC = () => {
                 >
                   Xem Profile
                 </Link>
+                {user.UserType === "Employer" && (
+                  <Link
+                    to="/quan-ly-cong-viec"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    Quản lý Công việc
+                  </Link>
+                )}
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_COUNT_JOBS, API_GET_JOBS } from "../../Service/JobAPI";
+import {
+  API_COUNT_JOBS,
+  API_GET_JOBS,
+  API_POST_APPLY_JOB,
+} from "../../Service/JobAPI";
 import { JobList_Response } from "../../Types/job";
 import { JobType } from "../../Types/constant";
 import dayjs from "dayjs";
-
+import { applyForJob } from "../../utils/jobUtils";
 const JobList: React.FC = () => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState<JobList_Response[]>([]);
@@ -56,8 +60,16 @@ const JobList: React.FC = () => {
     navigate(`/job/${jobId}`);
   };
   const handleSearch = () => {
-    setCurrentPage(0); // Đặt lại về trang đầu tiên
-    fetchJobsCount(); // Cập nhật số lượng công việc
+    setCurrentPage(0);
+    fetchJobsCount();
+  };
+  const handleApply = async (jobId: number) => {
+    const success = await applyForJob(jobId);
+    if (success) {
+      alert("Application successful!");
+    } else {
+      alert("Application failed. Please try again.");
+    }
   };
   console.log(jobs);
   return (
@@ -163,11 +175,14 @@ const JobList: React.FC = () => {
               <div className="flex justify-between">
                 <button
                   className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
-                  onClick={() => handleViewDetails(job.JobId)} // Call the view details function
+                  onClick={() => handleViewDetails(job.JobId)}
                 >
                   View details
                 </button>
-                <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                <button
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                  onClick={() => handleApply(job.JobId)}
+                >
                   Apply now
                 </button>
               </div>

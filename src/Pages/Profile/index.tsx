@@ -5,23 +5,27 @@ import {
   API_GET_EMPLOYEE_INFO,
 } from "../../Service/UserAPI";
 import { useParams } from "react-router-dom";
+import { EmployeeProfile, defaultProfile } from "../../Types/user";
 
 const Profile: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
-  const [profile, setProfile] = useState<any>({});
+  const [profile, setProfile] = useState<EmployeeProfile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [employeeData, setEmployeeData] = useState<any>({});
+  const [employeeData, setEmployeeData] =
+    useState<EmployeeProfile>(defaultProfile);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         if (id) {
-          const employeeData = await API_GET_EMPLOYEE_INFO(Number(id));
+          const employeeData: EmployeeProfile = await API_GET_EMPLOYEE_INFO(
+            Number(id)
+          );
           setProfile(employeeData);
           setEmployeeData(employeeData);
         } else {
-          const profileData = await API_GET_USER_PROFILE();
+          const profileData: EmployeeProfile = await API_GET_USER_PROFILE();
           setProfile(profileData);
           setEmployeeData(profileData);
         }
@@ -30,37 +34,56 @@ const Profile: React.FC = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, [id]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setEmployeeData((prevState: any) => ({
+
+    setEmployeeData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name as keyof EmployeeProfile]: value,
     }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
-    setEmployeeData((prevState: any) => ({
+
+    setEmployeeData((prevState) => ({
       ...prevState,
-      [name]: files ? files[0] : null,
+      [name as keyof EmployeeProfile]: files ? files[0] : null,
     }));
   };
+
+  function isEmployeeProfileKey(key: string): key is keyof EmployeeProfile {
+    return key in defaultProfile;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const formData = new FormData();
       for (const key in employeeData) {
-        if (employeeData[key] !== profile[key] && employeeData[key] !== null) {
-          formData.append(key, employeeData[key]);
+        if (
+          isEmployeeProfileKey(key) &&
+          employeeData[key] !== null &&
+          employeeData[key] !== undefined
+        ) {
+          formData.append(key, employeeData[key] as Blob);
         }
       }
+
       await API_UPDATE_EMPLOYEE(formData);
+
+      const updatedProfile: EmployeeProfile = id
+        ? await API_GET_EMPLOYEE_INFO(Number(id))
+        : await API_GET_USER_PROFILE();
+
+      setProfile(updatedProfile);
+      setEmployeeData(updatedProfile);
       setIsEditing(false);
     } catch (error) {
       console.error("Lỗi khi cập nhật:", error);
@@ -68,7 +91,7 @@ const Profile: React.FC = () => {
       setLoading(false);
     }
   };
-
+  console.log(isEditing);
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
@@ -76,37 +99,38 @@ const Profile: React.FC = () => {
         {!isEditing ? (
           <div>
             <p>
-              <strong>Họ và tên:</strong> {profile.FirstName} {profile.LastName}
+              <strong>Họ và tên:</strong> {profile?.FirstName}{" "}
+              {profile?.LastName}
             </p>
             <p>
-              <strong>Điện thoại:</strong> {profile.Phone}
+              <strong>Điện thoại:</strong> {profile?.Phone}
             </p>
             <p>
-              <strong>Địa chỉ:</strong> {profile.Address}, {profile.City},{" "}
-              {profile.Region}, {profile.Country}, {profile.PostalCode}
+              <strong>Địa chỉ:</strong> {profile?.Address}, {profile?.City},{" "}
+              {profile?.Region}, {profile?.Country}, {profile?.PostalCode}
             </p>
             <p>
-              <strong>Kỹ năng:</strong> {profile.Skills}
+              <strong>Kỹ năng:</strong> {profile?.Skills}
             </p>
             <p>
-              <strong>Trình độ học vấn:</strong> {profile.Education}
+              <strong>Trình độ học vấn:</strong> {profile?.Education}
             </p>
             <p>
-              <strong>Kinh nghiệm:</strong> {profile.Experience}
+              <strong>Kinh nghiệm:</strong> {profile?.Experience}
             </p>
             <p>
-              <strong>Ngôn ngữ:</strong> {profile.Language}
+              <strong>Ngôn ngữ:</strong> {profile?.Language}
             </p>
             <p>
-              <strong>Sở thích:</strong> {profile.Interest}
+              <strong>Sở thích:</strong> {profile?.Interest}
             </p>
             <p>
-              <strong>Mạng xã hội:</strong> {profile.SocialMedia}
+              <strong>Mạng xã hội:</strong> {profile?.SocialMedia}
             </p>
             <p>
-              <strong>Trạng thái:</strong> {profile.Status}
+              <strong>Trạng thái:</strong> {profile?.Status}
             </p>
-            {profile.Image && (
+            {profile?.Image && (
               <img
                 src={URL.createObjectURL(profile.Image)}
                 alt="Profile"
@@ -125,11 +149,10 @@ const Profile: React.FC = () => {
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
-              {/* Text Inputs */}
               <input
                 type="text"
                 name="FirstName"
-                value={employeeData.FirstName || ""}
+                value={employeeData.FirstName}
                 onChange={handleInputChange}
                 placeholder="Họ"
                 className="border p-2 rounded"
@@ -137,7 +160,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="LastName"
-                value={employeeData.LastName || ""}
+                value={employeeData.LastName}
                 onChange={handleInputChange}
                 placeholder="Tên"
                 className="border p-2 rounded"
@@ -145,7 +168,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="Phone"
-                value={employeeData.Phone || ""}
+                value={employeeData.Phone}
                 onChange={handleInputChange}
                 placeholder="Điện thoại"
                 className="border p-2 rounded"
@@ -153,7 +176,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="Skills"
-                value={employeeData.Skills || ""}
+                value={employeeData.Skills}
                 onChange={handleInputChange}
                 placeholder="Kỹ năng"
                 className="border p-2 rounded"
@@ -168,7 +191,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="Education"
-                value={employeeData.Education || ""}
+                value={employeeData.Education}
                 onChange={handleInputChange}
                 placeholder="Trình độ học vấn"
                 className="border p-2 rounded"
@@ -176,7 +199,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="Experience"
-                value={employeeData.Experience || ""}
+                value={employeeData.Experience}
                 onChange={handleInputChange}
                 placeholder="Kinh nghiệm"
                 className="border p-2 rounded"
@@ -184,7 +207,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="Language"
-                value={employeeData.Language || ""}
+                value={employeeData.Language}
                 onChange={handleInputChange}
                 placeholder="Ngôn ngữ"
                 className="border p-2 rounded"
@@ -192,7 +215,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="Interest"
-                value={employeeData.Interest || ""}
+                value={employeeData.Interest}
                 onChange={handleInputChange}
                 placeholder="Sở thích"
                 className="border p-2 rounded"
@@ -200,7 +223,7 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="SocialMedia"
-                value={employeeData.SocialMedia || ""}
+                value={employeeData.SocialMedia}
                 onChange={handleInputChange}
                 placeholder="Mạng xã hội"
                 className="border p-2 rounded"
@@ -208,13 +231,14 @@ const Profile: React.FC = () => {
               <input
                 type="text"
                 name="Status"
-                value={employeeData.Status || ""}
+                value={employeeData.Status}
                 onChange={handleInputChange}
                 placeholder="Trạng thái"
                 className="border p-2 rounded"
               />
-
-              {/* File Inputs */}
+            </div>
+            {/* File Inputs */}
+            <div className="mt-4">
               <input
                 type="file"
                 name="Image"
@@ -242,12 +266,10 @@ const Profile: React.FC = () => {
             </div>
             <button
               type="submit"
-              className={`bg-green-500 text-white px-4 py-2 mt-4 rounded ${
-                loading ? "opacity-50" : ""
-              }`}
+              className="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
               disabled={loading}
             >
-              {loading ? "Đang lưu..." : "Lưu thay đổi"}
+              {loading ? "Đang cập nhật..." : "Cập nhật"}
             </button>
           </form>
         )}
