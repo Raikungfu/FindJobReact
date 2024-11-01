@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  API_COUNT_JOBS,
-  API_GET_JOBS,
-  API_POST_APPLY_JOB,
-} from "../../Service/JobAPI";
+import { API_COUNT_JOBS, API_GET_JOBS } from "../../Service/JobAPI";
 import { JobList_Response } from "../../Types/job";
 import { JobType } from "../../Types/constant";
 import dayjs from "dayjs";
