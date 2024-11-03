@@ -16,6 +16,20 @@ export interface JobList_Response {
   CompanyLocation?: string;
   CompanyIndustry?: string;
 }
+// src/Types/job.ts
+
+export interface JobApplyDetail {
+  JobApplyId: number;
+  ApplyDate: string; // Có thể đổi sang Date nếu cần
+  EmployeeId: number;
+  LastName: string;
+  FirstName: string;
+  Phone: string;
+  Avt: string; // Đường dẫn đến ảnh đại diện
+  Cover: string; // Đường dẫn đến ảnh bìa
+}
+
+
 export interface PostJob_Request {
   Title: string;
   Description?: string;

@@ -189,9 +189,9 @@ const Home: React.FC = () => {
             Các danh mục công việc
           </h2>
           <Swiper
-            speed={1500}
+            speed={1200}
             autoplay={{
-              delay: 2000,
+              delay: 1500,
             }}
             modules={[Autoplay]}
             breakpoints={{
