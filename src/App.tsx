@@ -9,6 +9,8 @@ import PostJob from "./Pages/PostJob";
 import JobDetail from "./Pages/JobDetail";
 import Profile from "./Pages/Profile";
 import ManageJobs from "./Pages/ManageJob";
+import JobServices from "./Pages/JobServices";
+import OrderHistory from "./Pages/Order";
 
 const App = () => {
   return (
@@ -22,7 +24,9 @@ const App = () => {
         <Route path="job/:jobId" element={<JobDetail />} />
         <Route path="profile" element={<Profile />} />
         <Route path="/quan-ly-cong-viec" element={<ManageJobs />} />
+        <Route path="dich-vu-viec-lam" element={<JobServices />} />
         <Route path="profile/:id" element={<Profile />} />
+        <Route path="order-history" element={<OrderHistory />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

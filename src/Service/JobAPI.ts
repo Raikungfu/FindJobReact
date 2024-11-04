@@ -19,8 +19,11 @@ export const API_GET_JOBS = <T>(formData: FormDataOrOther<T>): Promise<T> => {
       throw error;
     });
 };
+
 export const API_GET_JOB_EMPLOYER = <T>(employerId?: number): Promise<T> => {
-  const url = `/api/Job/get-job-employer${employerId ? `?employerId=${employerId}` : ''}`;
+  const url = `/api/Job/get-job-employer${
+    employerId ? `?employerId=${employerId}` : ""
+  }`;
 
   return AxiosApi.get<T>(url)
     .then((response) => {
@@ -96,7 +99,7 @@ export const API_PUT_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
       throw error;
     });
 };
-export const API_DELETE_JOB =<T>(jobId: number): Promise<T> => {
+export const API_DELETE_JOB = <T>(jobId: number): Promise<T> => {
   return AxiosApi.delete<T>(`/api/Job/${jobId}`)
     .then((response) => {
       if (response.data) {
@@ -126,7 +129,9 @@ export const API_GET_JOB_CATEGORIES = <T>(): Promise<T> => {
       throw error;
     });
 };
-export const API_POST_HIRE_EMPLOYEE = <T>(formData: FormDataOrOther<T>): Promise<T> => {
+export const API_POST_HIRE_EMPLOYEE = <T>(
+  formData: FormDataOrOther<T>
+): Promise<T> => {
   return AxiosApi.post<T>(`/hire-employee`, formData)
     .then((response) => {
       if (response.data) {
@@ -157,7 +162,9 @@ export const API_GET_HIRE_EMPLOYEE = <T>(jobId: number): Promise<T> => {
     });
 };
 
-export const API_POST_APPLY_JOB = <T>(formData: FormDataOrOther<T>): Promise<T | null> => {
+export const API_POST_APPLY_JOB = <T>(
+  formData: FormDataOrOther<T>
+): Promise<T | null> => {
   return AxiosApi.post<T>(`/api/JobApply/apply-job`, formData)
     .then((response) => {
       if (response.data) {
@@ -175,10 +182,9 @@ export const API_POST_APPLY_JOB = <T>(formData: FormDataOrOther<T>): Promise<T |
       } else {
         console.error("Request setup error:", error.message);
       }
-      return null; 
+      return null;
     });
 };
-
 
 export const API_GET_MY_APPLIED_JOBS = <T>(): Promise<T> => {
   return AxiosApi.get<T>(`/api/JobApply/my-applied-job`)
@@ -225,7 +231,9 @@ export const API_GET_JOB_APPLY_DETAIL = <T>(jobApplyId: number): Promise<T> => {
       throw error;
     });
 };
-export const API_GET_JOB_APPLY_DETAIL_BY_JOB = <T>(jobId: number): Promise<T> => {
+export const API_GET_JOB_APPLY_DETAIL_BY_JOB = <T>(
+  jobId: number
+): Promise<T> => {
   return AxiosApi.get<T>(`/api/JobApply/job-apply-detail-by-job/${jobId}`)
     .then((response) => {
       if (response.data) {

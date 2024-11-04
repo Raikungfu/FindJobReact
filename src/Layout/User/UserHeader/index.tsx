@@ -33,6 +33,9 @@ const UserHeader: React.FC = () => {
           <Link to="/dang-tim-viec" className="hover:text-green-500">
             Đăng công việc
           </Link>
+          <Link to="/dich-vu-viec-lam" className="hover:text-green-500">
+            Dịch vụ
+          </Link>
           <Link to="/ve-chung-toi" className="hover:text-green-500">
             Về chúng tôi
           </Link>
@@ -64,6 +67,13 @@ const UserHeader: React.FC = () => {
                   onClick={() => setIsDropdownOpen(false)}
                 >
                   Xem Profile
+                </Link>
+                <Link
+                  to="/order-history"
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  Order History
                 </Link>
                 {user.UserType === "Employer" && (
                   <Link
