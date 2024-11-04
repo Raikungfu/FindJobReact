@@ -93,8 +93,8 @@ const Profile: React.FC = () => {
   };
   console.log(isEditing);
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div className="pt-20 min-h-screen flex flex-col items-center bg-gray-100">
+      <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold mb-4">Hồ sơ cá nhân</h1>
         {!isEditing ? (
           <div>
