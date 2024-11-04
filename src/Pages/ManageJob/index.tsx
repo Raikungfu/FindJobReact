@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { API_GET_JOB_EMPLOYER } from "../../Service/JobAPI";
+import {
+  API_GET_JOB_EMPLOYER,
+  API_GET_HIRE_EMPLOYEE,
+} from "../../Service/JobAPI";
 import { JobList_Response } from "../../Types/job";
-import JobApplicants from "../JobApplicants";
+import JobApplicants, { EmployeeProfileResponse } from "../JobApplicants";
 import Modal from "../../Components/Modal";
+import HiredEmployeesModal from "../../Components/HiredEmployeeModal";
+import { EmployeeProfile, HiredEmployee } from "../../Types/user";
 
 const ManageJobs: React.FC = () => {
   const [jobs, setJobs] = useState<JobList_Response[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
+  const [isHiredEmployeesModalOpen, setIsHiredEmployeesModalOpen] =
+    useState(false);
   const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
+  const [hiredEmployees, setHiredEmployees] = useState<HiredEmployee[]>([]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -35,14 +43,29 @@ const ManageJobs: React.FC = () => {
     fetchJobs();
   }, []);
 
-  const openModal = (jobId: number) => {
+  const openApplicantsModal = (jobId: number) => {
     setSelectedJobId(jobId);
-    setIsModalOpen(true);
+    setIsApplicantsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeApplicantsModal = () => {
+    setIsApplicantsModalOpen(false);
     setSelectedJobId(null);
+  };
+
+  const openHiredEmployeesModal = async (jobId: number) => {
+    try {
+      const employees: HiredEmployee[] = await API_GET_HIRE_EMPLOYEE(jobId);
+      setHiredEmployees(employees);
+      setIsHiredEmployeesModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching hired employees:", error);
+    }
+  };
+
+  const closeHiredEmployeesModal = () => {
+    setIsHiredEmployeesModalOpen(false);
+    setHiredEmployees([]);
   };
 
   if (loading)
@@ -87,9 +110,15 @@ const ManageJobs: React.FC = () => {
                 </button>
                 <button
                   className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300"
-                  onClick={() => openModal(job.JobId)}
+                  onClick={() => openApplicantsModal(job.JobId)}
                 >
                   View Applicants
+                </button>
+                <button
+                  className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition duration-300"
+                  onClick={() => openHiredEmployeesModal(job.JobId)}
+                >
+                  View Hired Employees
                 </button>
               </div>
             </div>
@@ -97,9 +126,15 @@ const ManageJobs: React.FC = () => {
         </div>
       )}
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isApplicantsModalOpen} onClose={closeApplicantsModal}>
         {selectedJobId && <JobApplicants jobId={selectedJobId} />}
       </Modal>
+
+      <HiredEmployeesModal
+        isOpen={isHiredEmployeesModalOpen}
+        onClose={closeHiredEmployeesModal}
+        employees={hiredEmployees}
+      />
     </div>
   );
 };

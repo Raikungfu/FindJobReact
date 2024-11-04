@@ -20,6 +20,15 @@ export interface EmployeeProfile {
   CIFront?: File | null;
   CIBehind?: File | null;
 }
+export interface HiredEmployee {
+  HireId: number;
+  HireDate: string;  
+  Status: string;
+  JobId: number;
+  EmployerId: number;
+  EmployeeId: number;
+  JobApplyId: number;
+}
 export const defaultProfile: EmployeeProfile = {
   Description: "",
   FirstName: "",

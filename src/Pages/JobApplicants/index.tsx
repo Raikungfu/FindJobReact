@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   API_GET_JOB_APPLY_DETAIL_BY_JOB,
   API_POST_HIRE_EMPLOYEE,
+  API_GET_HIRE_EMPLOYEE,
 } from "../../Service/JobAPI";
 import { JobApplyDetail } from "../../Types/job"; // Định nghĩa interface của JobApplyDetail
 import EmployeeModal from "../../Components/Modal/EmployeeModal";
@@ -10,7 +11,7 @@ import { API_GET_EMPLOYEE_INFO } from "../../Service/UserAPI";
 interface JobApplicantsProps {
   jobId: number;
 }
-interface EmployeeProfileResponse {
+export interface EmployeeProfileResponse {
   EmployeeId: number;
   FirstName: string;
   LastName: string;
@@ -21,9 +22,9 @@ interface EmployeeProfileResponse {
   Country: string;
   PostalCode: string;
   Description: string;
-  Avt?: string; // Ảnh đại diện
-  Cover?: string; // Ảnh bìa
-  UserId: number; // Thêm thuộc tính này
+  Avt?: string;
+  Cover?: string;
+  UserId: number;
 }
 const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
   const [applicants, setApplicants] = useState<JobApplyDetail[]>([]);
@@ -111,7 +112,7 @@ const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
                 </button>
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
-                  onClick={() => handleOpenModal(applicant.EmployeeId)} // Mở modal với EmployeeId
+                  onClick={() => handleOpenModal(applicant.EmployeeId)}
                 >
                   Xem Hồ Sơ
                 </button>
