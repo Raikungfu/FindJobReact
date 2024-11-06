@@ -11,6 +11,8 @@ import Profile from "./Pages/Profile";
 import ManageJobs from "./Pages/ManageJob";
 import JobServices from "./Pages/JobServices";
 import OrderHistory from "./Pages/Order";
+import PaymentSuccess from "./Pages/PaymentStatus/PaymentSuccess";
+import PaymentFail from "./Pages/PaymentStatus/PaymentFail";
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
         <Route path="dich-vu-viec-lam" element={<JobServices />} />
         <Route path="profile/:id" element={<Profile />} />
         <Route path="order-history" element={<OrderHistory />} />
+        <Route path="payment-success" element={<PaymentSuccess />} />
+        <Route path="payment-fail" element={<PaymentFail />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

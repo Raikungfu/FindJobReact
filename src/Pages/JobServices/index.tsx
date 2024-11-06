@@ -9,6 +9,7 @@ import {
 import JobServiceList from "../../Components/JobService";
 import { Order } from "../../Types/order";
 import { useError } from "../../Context/ErrorProvider";
+import { useSuccess } from "../../Context/SuccessProvider";
 
 interface PaymentResponse {
   paymentUrl: string;
@@ -19,6 +20,7 @@ const JobServices: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<JobService | null>(null);
   const { setError } = useError();
+  const { setSuccess } = useSuccess();
 
   const [jobServices, setJobServices] = useState<JobService[]>([]);
 
@@ -64,7 +66,7 @@ const JobServices: React.FC = () => {
         )) as unknown as PaymentResponse;
 
         if (response.paymentUrl) {
-          window.open(response.paymentUrl, "_blank");
+          openVnPayPopup(response.paymentUrl);
         } else {
           setError("Failed to generate payment link. Please try again.");
         }
@@ -94,6 +96,39 @@ const JobServices: React.FC = () => {
         Loading...
       </div>
     );
+
+  function openVnPayPopup(paymentUrl: string) {
+    var width = 600;
+    var height = 700;
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
+
+    var paymentWindow = window.open(
+      paymentUrl,
+      "VnPayPayment",
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
+
+    if (
+      !paymentWindow ||
+      paymentWindow.closed ||
+      typeof paymentWindow.closed == "undefined"
+    ) {
+      alert("Vui lòng cho phép popup để thanh toán.");
+    }
+
+    window.addEventListener("message", function (event) {
+      if (event.data.status === "success") {
+        paymentWindow?.close();
+        setIsModalOpen(false);
+        setSelectedJob(null);
+        setSuccess("Thanh toán thành công!");
+      } else if (event.data.status === "cancel") {
+        paymentWindow?.close();
+        setError("Thanh toán bị hủy! " + event.data.message);
+      }
+    });
+  }
 
   return (
     <div className="pt-20 min-h-screen flex flex-col items-center bg-gray-100">
