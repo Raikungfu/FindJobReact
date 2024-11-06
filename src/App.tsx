@@ -23,7 +23,7 @@ const App = () => {
         <Route path="register" element={<Register />} />
         <Route path="job/:jobId" element={<JobDetail />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="/quan-ly-cong-viec" element={<ManageJobs />} />
+        <Route path="/my-posts" element={<ManageJobs />} />
         <Route path="dich-vu-viec-lam" element={<JobServices />} />
         <Route path="profile/:id" element={<Profile />} />
         <Route path="order-history" element={<OrderHistory />} />

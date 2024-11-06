@@ -96,10 +96,8 @@ const JobServices: React.FC = () => {
     );
 
   return (
-    <div className="pt-20 min-h-screen flex flex-col items-center bg-gray-100">
-      <h1 className="text-4xl font-bold mb-8 text-blue-600">
-        Manage Your Jobs
-      </h1>
+    <div className="mt-5 pt-20 min-h-screen flex flex-col items-center bg-gray-100">
+      <h1 className="text-4xl font-bold mb-8 text-green-600">Dịch vụ</h1>
       {jobServices.length === 0 ? (
         <p className="text-lg text-gray-600">No job services posted yet.</p>
       ) : (

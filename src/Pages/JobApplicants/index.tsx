@@ -68,9 +68,13 @@ const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
     fetchApplicants();
   }, [jobId]);
 
-  const handleHire = async (employeeId: number) => {
+  const handleHire = async (JobApplyId: number) => {
     try {
-      await API_POST_HIRE_EMPLOYEE({ JobId: jobId, EmployeeId: employeeId });
+      await API_POST_HIRE_EMPLOYEE({
+        JobApplyId: JobApplyId,
+        JobId: null,
+        EmployeeId: null,
+      });
       alert("Đã thuê ứng viên thành công!");
     } catch (error) {
       console.error("Error hiring employee:", error);
@@ -91,7 +95,7 @@ const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
           Chưa có ứng viên nào apply vào công việc này.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl p-4">
           {applicants.map((applicant) => (
             <div
               key={applicant.JobApplyId}
@@ -106,9 +110,9 @@ const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
               <div className="flex justify-between mt-4">
                 <button
                   className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300"
-                  onClick={() => handleHire(applicant.EmployeeId)}
+                  onClick={() => handleHire(applicant.JobApplyId)}
                 >
-                  Hire
+                  Nhận
                 </button>
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"

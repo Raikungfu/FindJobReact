@@ -78,9 +78,9 @@ const ManageJobs: React.FC = () => {
     return <div className="text-red-500 text-center p-10">{error}</div>;
 
   return (
-    <div className="pt-20 min-h-screen flex flex-col items-center bg-gray-100">
-      <h1 className="text-4xl font-bold mb-8 text-blue-600">
-        Manage Your Jobs
+    <div className="mt-5 pt-20 min-h-screen flex flex-col items-center bg-gray-100">
+      <h1 className="text-3xl font-bold mb-8 text-green-600">
+        Bài Đăng Tuyển Dụng Của Tôi
       </h1>
       {jobs.length === 0 ? (
         <p className="text-lg text-gray-600">No jobs posted yet.</p>
@@ -100,25 +100,25 @@ const ManageJobs: React.FC = () => {
               </p>
               <div className="flex justify-between mt-4">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300"
                   onClick={() => {}}
                 >
                   Edit
                 </button>
-                <button className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-300">
+                {/* <button className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-300">
                   Delete
-                </button>
+                </button> */}
                 <button
                   className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300"
                   onClick={() => openApplicantsModal(job.JobId)}
                 >
-                  View Applicants
+                  Applicants
                 </button>
                 <button
-                  className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition duration-300"
+                  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300"
                   onClick={() => openHiredEmployeesModal(job.JobId)}
                 >
-                  View Hired Employees
+                  Hired
                 </button>
               </div>
             </div>
