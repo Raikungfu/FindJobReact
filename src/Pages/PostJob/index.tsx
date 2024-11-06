@@ -294,7 +294,7 @@ const PostJob: React.FC = () => {
               onChange={handleCategoryChange}
             >
               <option value="" disabled>
-                Select a category
+                Chọn danh mục
               </option>
               {jobCategories.map((category) => (
                 <option

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   API_GET_JOB_APPLY_DETAIL_BY_JOB,
   API_POST_HIRE_EMPLOYEE,
-  API_GET_HIRE_EMPLOYEE,
 } from "../../Service/JobAPI";
 import { JobApplyDetail } from "../../Types/job"; // Định nghĩa interface của JobApplyDetail
 import EmployeeModal from "../../Components/Modal/EmployeeModal";
@@ -72,8 +71,6 @@ const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
     try {
       await API_POST_HIRE_EMPLOYEE({
         JobApplyId: JobApplyId,
-        JobId: null,
-        EmployeeId: null,
       });
       alert("Đã thuê ứng viên thành công!");
     } catch (error) {

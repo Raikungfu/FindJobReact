@@ -43,9 +43,9 @@ const OrderHistory: React.FC = () => {
   return (
     <div className="pt-20 min-h-screen flex flex-col items-center bg-gray-100">
       <div className="w-full max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4">Order History</h2>
+        <h2 className="text-2xl font-bold mb-4">Lịch Sử Đơn Hàng</h2>
         {orders.length === 0 ? (
-          <p>No orders found.</p>
+          <p>Không tìm thấy đơn hàng nào</p>
         ) : (
           <ul className="space-y-4">
             {orders.map((order) => (
@@ -54,12 +54,20 @@ const OrderHistory: React.FC = () => {
                 className="border p-4 rounded-lg shadow hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleOrderClick(order)}
               >
-                <h3 className="font-semibold">Order ID: {order.OrderId}</h3>
-                <p>Price: {order.Price} USD</p>
+                <h3 className="font-semibold">ID: {order.OrderId}</h3>
                 <p>
-                  Order Date: {new Date(order.OrderDate!).toLocaleDateString()}
+                  Giá:
+                  {(order.Price ?? 0).toLocaleString("en-US", {
+                    minimumFractionDigits: 0,
+                    useGrouping: true,
+                  })}
+                  đ
                 </p>
-                <p>Status: {order.OrderStatus}</p>
+                <p>
+                  Ngày đặt hàng:{" "}
+                  {new Date(order.OrderDate!).toLocaleDateString()}
+                </p>
+                <p>Trạng thái: {order.OrderStatus}</p>
               </li>
             ))}
           </ul>

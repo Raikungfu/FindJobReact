@@ -1,15 +1,21 @@
-import { FC } from "react";
-// import UserHeader from "./userHeader";
-import { Outlet } from "react-router-dom";
+// UserLayout.tsx
+import { Outlet, useLocation } from "react-router-dom";
 import UserHeader from "./UserHeader";
 import UserFooter from "./UserFooter";
+const UserLayout = () => {
+  const location = useLocation();
 
-const UserLayout: FC = () => {
+  // Check if the current route is "/chat"
+  const isChatPage = location.pathname === "/chat";
+
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <UserHeader />
-      {<Outlet />}
-      <UserFooter />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+      {/* Render Footer only if not on the chat page */}
+      {!isChatPage && <UserFooter />}
     </div>
   );
 };

@@ -1,8 +1,6 @@
 import { AxiosError } from "axios";
 import AxiosApi from "../Configs/axios";
 import { errorData, FormDataOrOther } from "../Types/constant";
-import { EmployeeProfileResponse } from "../Pages/JobApplicants";
-import { HiredEmployee } from "../Types/user";
 
 export const API_GET_JOBS = <T>(formData: FormDataOrOther<T>): Promise<T> => {
   return AxiosApi.get<T>(`/api/Job/outstanding-job`, formData)

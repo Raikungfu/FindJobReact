@@ -148,19 +148,19 @@ const JobServices: React.FC = () => {
               {selectedJob.ServiceName}
             </h2>
             <p className="text-gray-600">{selectedJob.Description}</p>
-            <p className="text-gray-600">Type: {selectedJob.jobServiceType}</p>
-            <p className="text-blue-600 font-semibold">
-              Price: ${selectedJob.Price}
+            <p className="text-gray-600">Loại: {selectedJob.jobServiceType}</p>
+            <p className="text-green-600 font-semibold">
+              Giá: {selectedJob.Price}đ
             </p>
             {selectedJob.Duration && (
               <p className="text-gray-500">
-                Duration: {selectedJob.Duration} hours
+                Thời hạn: {selectedJob.Duration} ngày
               </p>
             )}
 
             <div className="mt-4">
               <h3 className="text-lg font-semibold mb-2">
-                Choose Payment Method
+                Chọn Phương Thức Thanh Toán
               </h3>
               <div className="flex flex-col">
                 <label>
@@ -203,7 +203,7 @@ const JobServices: React.FC = () => {
               className="bg-blue-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300"
               onClick={handleOrder}
             >
-              Order
+              Đặt hàng
             </button>
           </div>
         )}

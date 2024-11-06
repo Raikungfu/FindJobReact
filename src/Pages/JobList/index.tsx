@@ -113,7 +113,7 @@ const JobList: React.FC = () => {
         {/* Job List Section */}
         <div className="mb-4">
           <h2 className="text-xl font-bold text-gray-700">
-            All Jobs ({jobsCount})
+            Tổng số công việc hiện tại ({jobsCount})
           </h2>
         </div>
 
@@ -151,7 +151,7 @@ const JobList: React.FC = () => {
                 </span>
               </div>
               <p className="text-gray-500 mb-2">
-                Salary:{" "}
+                Lương:{" "}
                 {(job.Salary ?? 0).toLocaleString("en-US", {
                   minimumFractionDigits: 0,
                   useGrouping: true,

@@ -119,7 +119,7 @@ const UserHeader: React.FC = () => {
 
               {/* Dropdown menu for profile and logout */}
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
+                <div className="absolute right-16 top-16 w-48 bg-white rounded-md shadow-lg z-50">
                   <Link
                     to="/profile"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"

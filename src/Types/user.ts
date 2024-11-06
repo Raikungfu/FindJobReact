@@ -15,8 +15,9 @@ export interface EmployeeProfile {
   Interest: string;
   SocialMedia: string;
   Status: string;
-  Image?: File | null;
-  Resume?: File | null;
+  Avt?: File | null;
+  Cover?: File | null;
+  CV?: File | null;
   CIFront?: File | null;
   CIBehind?: File | null;
 }
@@ -41,8 +42,37 @@ export const defaultProfile: EmployeeProfile = {
   Interest: "",
   SocialMedia: "",
   Status: "",
-  Image: null,
-  Resume: null,
+  Avt: null,
+  Cover: null,
+  CV: null,
   CIFront: null,
   CIBehind: null,
 };
+export interface EmployerProfile {
+  employerId: number;
+  name?: string;
+  description?: string;
+  companyName?: string;
+  companyDescription?: string;
+  companyWebsite?: string;
+  companyLogo?: string;
+  companyLocation?: string;
+  companyContact?: string;
+  companyEmail?: string;
+  companyPhone?: string;
+  companyType?: string;
+  companySize?: string;
+  companyIndustry?: string;
+  companyFounded?: string;
+  companyMission?: string;
+  companyVision?: string;
+  companyValues?: string;
+  companyBenefits?: string;
+  companyProjects?: string;
+  companyServices?: string;
+  avt?: string; // Avatar
+  cover?: string; // Cover image
+  ciFront?: string; // Company Identification Front
+  ciBehind?: string; // Company Identification Behind
+  userId: number;
+}

@@ -18,12 +18,12 @@ const JobServiceList: React.FC<
           />
           <h3 className="text-lg font-semibold">{service.ServiceName}</h3>
           <p className="text-sm text-gray-600">
-            Type: {service.jobServiceType}
+            Loại: {service.jobServiceType}
           </p>
-          <p className="text-blue-600 font-semibold">Price: ${service.Price}</p>
+          <p className="text-green-600 font-semibold">Giá: {service.Price}đ</p>
           {service.Duration && (
             <p className="text-gray-500 text-sm">
-              Duration: {service.Duration} hours
+              Thời hạn: {service.Duration} ngày
             </p>
           )}
           <button

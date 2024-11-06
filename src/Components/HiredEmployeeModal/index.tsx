@@ -1,6 +1,6 @@
 // HiredEmployeesModal.tsx
 import React from "react";
-import { EmployeeProfileResponse } from "../../Pages/JobApplicants";
+// import { EmployeeProfileResponse } from "../../Pages/JobApplicants";
 import { HiredEmployee } from "../../Types/user";
 
 interface HiredEmployeesModalProps {

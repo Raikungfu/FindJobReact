@@ -4,10 +4,10 @@ import {
   API_GET_HIRE_EMPLOYEE,
 } from "../../Service/JobAPI";
 import { JobList_Response } from "../../Types/job";
-import JobApplicants, { EmployeeProfileResponse } from "../JobApplicants";
+import JobApplicants from "../JobApplicants";
 import Modal from "../../Components/Modal";
 import HiredEmployeesModal from "../../Components/HiredEmployeeModal";
-import { EmployeeProfile, HiredEmployee } from "../../Types/user";
+import { HiredEmployee } from "../../Types/user";
 
 const ManageJobs: React.FC = () => {
   const [jobs, setJobs] = useState<JobList_Response[]>([]);

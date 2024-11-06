@@ -64,3 +64,19 @@ export const API_GET_MEMBERS = <T>(): Promise<T> => {
       throw error;
     });
 };
+export const API_GET_EMPLOYER_INFO = <T>(id: number): Promise<T> => {
+  return AxiosApi.get<T>(`/api/Employer/${id}`)
+    .then((response) => {
+      if (response.data) {
+        return response.data;
+      } else {
+        const error = response.error as AxiosError;
+        const x = error.response?.data as errorData;
+        throw new Error(x.error || "Input not correct!");
+      }
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+

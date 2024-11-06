@@ -13,6 +13,7 @@ import JobServices from "./Pages/JobServices";
 import OrderHistory from "./Pages/Order";
 import PaymentSuccess from "./Pages/PaymentStatus/PaymentSuccess";
 import PaymentFail from "./Pages/PaymentStatus/PaymentFail";
+import ChatPage from "./Pages/Chat";
 
 const App = () => {
   return (
@@ -25,12 +26,13 @@ const App = () => {
         <Route path="register" element={<Register />} />
         <Route path="job/:jobId" element={<JobDetail />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="/my-posts" element={<ManageJobs />} />
+        <Route path="my-posts" element={<ManageJobs />} />
         <Route path="dich-vu-viec-lam" element={<JobServices />} />
         <Route path="profile/:id" element={<Profile />} />
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="payment-success" element={<PaymentSuccess />} />
         <Route path="payment-fail" element={<PaymentFail />} />
+        <Route path="chat" element={<ChatPage />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

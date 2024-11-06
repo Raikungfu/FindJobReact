@@ -84,19 +84,26 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
         >
           &times;
         </button>
-        <h3 className="text-xl font-semibold mb-4">Order Details</h3>
-        <p>Order ID: {order.OrderId}</p>
-        <p>Description: {order.Description}</p>
-        <p>Price: {order.Price} USD</p>
-        <p>Order Date: {new Date(order.OrderDate!).toLocaleDateString()}</p>
-        <p>Status: {order.OrderStatus}</p>
-        <p>Payment Method: {order.PaymentMethod}</p>
-        <p>Payment Status: {order.PaymentStatus}</p>
+        <h3 className="text-xl font-semibold mb-4">Chi tiết đơn hàng</h3>
+        <p>ID: {order.OrderId}</p>
+        <p>Mô tả chi tiết: {order.Description}</p>
+        <p>
+          Giá:{" "}
+          {(order.Price ?? 0).toLocaleString("en-US", {
+            minimumFractionDigits: 0,
+            useGrouping: true,
+          })}
+          đ
+        </p>
+        <p>Ngày đặt hàng: {new Date(order.OrderDate!).toLocaleDateString()}</p>
+        <p>Trạng thái: {order.OrderStatus}</p>
+        <p>Phương thức thanh toán: {order.PaymentMethod}</p>
+        <p>Trạng thái thanh toán: {order.PaymentStatus}</p>
         {order.OrderStatus === "Pending" && (
           <>
             <div className="mt-4">
               <h3 className="text-lg font-semibold mb-2">
-                Choose Payment Method
+                Chọn phương thức thanh toán
               </h3>
               <div className="flex flex-col">
                 <label>
@@ -119,7 +126,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     checked={paymentMethod === "DomesticCard"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  Domestic Card
+                  Thẻ nội địa
                 </label>
                 <label>
                   <input
@@ -130,7 +137,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     checked={paymentMethod === "InternationalCard"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  International Card
+                  Thẻ quốc tế/VISA
                 </label>
               </div>
             </div>
@@ -141,7 +148,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 handlePaymentClick(order.OrderId);
               }}
             >
-              Pay Now
+              Thanh Toán
             </button>
           </>
         )}
