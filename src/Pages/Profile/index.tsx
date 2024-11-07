@@ -21,7 +21,7 @@ const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [employeeData, setEmployeeData] =
     useState<EmployeeProfile>(defaultProfile);
-  const [, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // const userType = JSON.parse(localStorage.getItem("User") || "{}").UserType;
   const [userType, setUserType] = useState<"Employee" | "Employer" | null>(
@@ -243,7 +243,7 @@ const Profile: React.FC = () => {
               <div className="flex-1">
                 <h1 className="text-2xl font-bold">
                   {userType === "Employer"
-                    ? (profile as EmployerProfile)?.CompanyName
+                    ? (profile as EmployerProfile)?.Name
                     : `${(profile as EmployeeProfile)?.FirstName} ${
                         (profile as EmployeeProfile)?.LastName
                       }`}

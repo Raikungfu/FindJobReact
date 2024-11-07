@@ -52,6 +52,7 @@ export const API_GET_EMPLOYER_INFO = <T>(id: number): Promise<T> => {
       throw error;
     });
 };
+
 export const API_UPDATE_EMPLOYEE = async <T>(formData: FormDataOrOther<T>): Promise<T | null> => {
   try {
     const response = await AxiosApi.put<T>(`/api/Employee/update`, formData);

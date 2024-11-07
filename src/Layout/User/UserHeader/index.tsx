@@ -23,7 +23,7 @@ const UserHeader: React.FC = () => {
         {/* Logo Section */}
         <div className="flex items-center">
           <Link to="/" className="text-2xl font-bold">
-            FindJob
+            Jobby
           </Link>
         </div>
 
