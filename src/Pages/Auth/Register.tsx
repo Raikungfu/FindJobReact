@@ -160,6 +160,57 @@ const Register: React.FC = () => {
           </div>
           <div className="mb-7">
             <label className="block text-gray-700 font-medium mb-4">
+              Giới tính:
+            </label>
+            <div className="flex space-x-4">
+              <label className="flex items-center">
+                <input
+                  name="UserGender"
+                  type="radio"
+                  value="Male"
+                  className="mr-2"
+                />
+                Nam
+              </label>
+              <label className="flex items-center">
+                <input
+                  name="UserGender"
+                  type="radio"
+                  value="Female"
+                  className="mr-2"
+                />
+                Nữ
+              </label>
+              <label className="flex items-center">
+                <input
+                  name="UserGender"
+                  type="radio"
+                  value="Other"
+                  className="mr-2"
+                />
+                Khác
+              </label>
+            </div>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="Password"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Ngày sinh
+            </label>
+            <input
+              type="password"
+              id="Password"
+              name="Password"
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="(Tối thiểu 6 ký tự)"
+              minLength={6}
+              required
+            />
+          </div>
+          <div className="mb-7">
+            <label className="block text-gray-700 font-medium mb-4">
               Bạn muốn đăng ký với vai trò:
             </label>
             <div className="flex space-x-4">
