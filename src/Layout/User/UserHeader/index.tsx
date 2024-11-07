@@ -128,6 +128,13 @@ const UserHeader: React.FC = () => {
                     Thông Tin
                   </Link>
                   <Link
+                    to="/chat"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    Chat
+                  </Link>
+                  <Link
                     to="/order-history"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                     onClick={() => setIsDropdownOpen(false)}

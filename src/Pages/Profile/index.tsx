@@ -20,7 +20,6 @@ const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [employeeData, setEmployeeData] =
     useState<EmployeeProfile>(defaultProfile);
-  const [loading, setLoading] = useState(false);
 
   const userType = JSON.parse(localStorage.getItem("User") || "{}").UserType;
   const navigate = useNavigate();
@@ -47,24 +46,16 @@ const Profile: React.FC = () => {
     fetchProfile();
   }, [id, userType]);
   console.log("Updated profile in state:", profile);
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setEmployeeData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
   const handleChat = () => {
     const targetUserId = profile?.UserId;
     if (targetUserId) {
       navigate(`/chat?userId=${targetUserId}`);
     }
   };
+  /*
   function isEmployeeProfileKey(key: string): key is keyof EmployeeProfile {
     return key in defaultProfile;
-  }
+  }*/
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
@@ -73,7 +64,7 @@ const Profile: React.FC = () => {
       [name]: files ? files[0] : null,
     }));
   };
-
+  /*
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -105,6 +96,7 @@ const Profile: React.FC = () => {
       setLoading(false);
     }
   };
+  */
   const renderEmployeeDetails = (profile: EmployeeProfile) => (
     <div className="space-y-6">
       <div className="bg-white p-4 rounded-lg shadow-md">

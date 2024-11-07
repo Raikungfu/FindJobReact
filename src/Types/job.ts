@@ -30,17 +30,17 @@ export interface JobApplyDetail {
   Cover: string; // Đường dẫn đến ảnh bìa
 }
 
-
 export interface PostJob_Request {
   Title: string;
   Description?: string;
   Salary?: number;
   DateFrom: string;
   DateTo: string;
-  JobType: JobType; 
-  JobCategoryId: number; 
-  EmployerId: number; 
+  JobType: JobType;
+  JobCategoryId: number;
+  EmployerId: number;
 }
+
 export interface JobCategory_Response {
   id: number;
   JobCategoryId: number;

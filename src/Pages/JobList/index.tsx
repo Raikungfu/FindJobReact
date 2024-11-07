@@ -9,7 +9,6 @@ const JobList: React.FC = () => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState<JobList_Response[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [jobsCount, setJobsCount] = useState<number>(0);
   const [title, setTitle] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
   const [category, setCategory] = useState("");
@@ -17,7 +16,6 @@ const JobList: React.FC = () => {
   const fetchJobsCount = async () => {
     try {
       const count = await API_COUNT_JOBS();
-      setJobsCount(count);
     } catch (error) {
       console.error("Error fetching job count:", error);
     }
