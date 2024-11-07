@@ -25,30 +25,35 @@ const JobList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const searchJobs = (await API_GET_JOBS({
-        search: { title, location: locationSearch, category },
+        title,
+        location: locationSearch,
+        category,
         pageSize: 6,
-        pageNumber: currentPage,
+        pageNumber: 0,
       })) as unknown as JobList_Response[];
       if (searchJobs) {
         setJobs(searchJobs);
-        fetchJobsCount();
+        setCurrentPage(currentPage);
       }
     };
     fetchData();
-  }, [title, locationSearch, category, currentPage]);
+  }, [title, locationSearch, category]);
 
   const LoadMore = async () => {
     if (loading) return;
     setLoading(true);
+    const nextPage = currentPage + 1;
     const searchJobs = (await API_GET_JOBS({
-      search: { title, location: locationSearch, category },
+      title,
+      location: locationSearch,
+      category,
       pageSize: 6,
-      pageNumber: currentPage + 1,
+      pageNumber: nextPage,
     })) as unknown as JobList_Response[];
     if (searchJobs) {
-      setJobs([...jobs, ...searchJobs]);
+      setJobs((prevJobs) => [...prevJobs, ...searchJobs]); // Thêm job mới vào danh sách cũ
+      setCurrentPage(nextPage); // Tăng trang hiện tại sau khi load thêm
     }
-    setCurrentPage(currentPage + 1);
     setLoading(false);
     fetchJobsCount();
   };
@@ -101,21 +106,21 @@ const JobList: React.FC = () => {
               onChange={(e) => setCategory(e.target.value)}
               className="border p-3 w-64 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
-            <button
+            {/* <button
               className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600"
               onClick={handleSearch} // Gọi hàm tìm kiếm
             >
               Tìm kiếm
-            </button>
+            </button> */}
           </div>
         </div>
 
         {/* Job List Section */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h2 className="text-xl font-bold text-gray-700">
             Tổng số công việc hiện tại ({jobsCount})
           </h2>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs.map((job) => (
@@ -187,14 +192,17 @@ const JobList: React.FC = () => {
         </div>
 
         {/* Load more button */}
-        <div className="flex justify-center mt-6">
-          <button
-            className="text-green-500 hover:text-green-700 underline"
-            onClick={LoadMore}
-          >
-            View more
-          </button>
-        </div>
+        {
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={LoadMore}
+              className="text-green-500 hover:text-green-700 underline"
+              disabled={loading}
+            >
+              {loading ? "Đang Tải..." : "Xem Thêm"}
+            </button>
+          </div>
+        }
       </div>
     </div>
   );

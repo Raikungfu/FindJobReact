@@ -25,6 +25,7 @@ export interface JobApplyDetail {
   LastName: string;
   FirstName: string;
   Phone: string;
+  Status: string;
   Avt: string; // Đường dẫn đến ảnh đại diện
   Cover: string; // Đường dẫn đến ảnh bìa
 }

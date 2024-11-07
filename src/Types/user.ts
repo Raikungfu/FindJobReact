@@ -1,4 +1,5 @@
 export interface EmployeeProfile {
+  UserId: number;
   Description: string;
   FirstName: string;
   LastName: string;
@@ -31,6 +32,7 @@ export interface HiredEmployee {
   JobApplyId: number;
 }
 export const defaultProfile: EmployeeProfile = {
+  UserId: 0,
   Description: "",
   FirstName: "",
   LastName: "",
@@ -49,30 +51,30 @@ export const defaultProfile: EmployeeProfile = {
   CIBehind: null,
 };
 export interface EmployerProfile {
-  employerId: number;
-  name?: string;
-  description?: string;
-  companyName?: string;
-  companyDescription?: string;
-  companyWebsite?: string;
-  companyLogo?: string;
-  companyLocation?: string;
-  companyContact?: string;
-  companyEmail?: string;
-  companyPhone?: string;
-  companyType?: string;
-  companySize?: string;
-  companyIndustry?: string;
-  companyFounded?: string;
-  companyMission?: string;
-  companyVision?: string;
-  companyValues?: string;
-  companyBenefits?: string;
-  companyProjects?: string;
-  companyServices?: string;
-  avt?: string; // Avatar
-  cover?: string; // Cover image
-  ciFront?: string; // Company Identification Front
-  ciBehind?: string; // Company Identification Behind
-  userId: number;
+  EmployerId: number;
+  Name?: string;
+  Description?: string;
+  CompanyName?: string;
+  CompanyDescription?: string;
+  CompanyWebsite?: string;
+  CompanyLogo?: string;
+  CompanyLocation?: string;
+  CompanyContact?: string;
+  CompanyEmail?: string;
+  CompanyPhone?: string;
+  CompanyType?: string;
+  CompanySize?: string;
+  CompanyIndustry?: string;
+  CompanyFounded?: string;
+  CompanyMission?: string;
+  CompanyVision?: string;
+  CompanyValues?: string;
+  CompanyBenefits?: string;
+  CompanyProjects?: string;
+  CompanyServices?: string;
+  Avt?: string; // Avatar
+  Cover?: string; // Cover image
+  CiFront?: string; // Company Identification Front
+  CiBehind?: string; // Company Identification Behind
+  UserId: number;
 }

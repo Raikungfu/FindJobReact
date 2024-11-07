@@ -78,7 +78,9 @@ const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
       alert("Không thể thuê ứng viên. Vui lòng thử lại.");
     }
   };
-
+  const filteredApplicants = applicants.filter(
+    (applicant) => applicant.Status !== "Accepted"
+  );
   if (loading) return <div className="text-center">Đang tải...</div>;
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
@@ -87,13 +89,13 @@ const JobApplicants: React.FC<JobApplicantsProps> = ({ jobId }) => {
       <h1 className="text-3xl font-bold mb-6 text-blue-600">
         Danh sách ứng viên
       </h1>
-      {applicants.length === 0 ? (
+      {filteredApplicants.length === 0 ? (
         <p className="text-lg text-gray-600">
           Chưa có ứng viên nào apply vào công việc này.
         </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl p-4">
-          {applicants.map((applicant) => (
+          {filteredApplicants.map((applicant) => (
             <div
               key={applicant.JobApplyId}
               className="bg-white shadow-lg rounded-lg p-6"
