@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  API_UPDATE_EMPLOYEE,
   API_GET_USER_PROFILE,
   API_GET_EMPLOYEE_INFO,
   API_GET_EMPLOYER_INFO,
   API_UPDATE_EMPLOYER,
+  API_UPDATE_EMPLOYEE,
 } from "../../Service/UserAPI";
 import { useNavigate, useParams } from "react-router-dom";
 import {

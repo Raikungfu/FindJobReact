@@ -13,13 +13,6 @@ const JobList: React.FC = () => {
   const [locationSearch, setLocationSearch] = useState("");
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
-  // const fetchJobsCount = async () => {
-  //   try {
-  //     const count = await API_COUNT_JOBS();
-  //   } catch (error) {
-  //     console.error("Error fetching job count:", error);
-  //   }
-  // };
   useEffect(() => {
     const fetchData = async () => {
       const searchJobs = (await API_GET_JOBS({
@@ -53,7 +46,6 @@ const JobList: React.FC = () => {
       setCurrentPage(nextPage); // Tăng trang hiện tại sau khi load thêm
     }
     setLoading(false);
-    // fetchJobsCount();
   };
   const handleViewDetails = (jobId: number) => {
     navigate(`/job/${jobId}`);

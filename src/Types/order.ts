@@ -43,3 +43,16 @@ export interface Order {
   PaymentRef?: string;
   PaymentStatus: PaymentStatus;
 }
+
+export interface PaymentResponse {
+  paymentUrl: string;
+}
+
+export interface PayOSResponse {
+  loading: boolean;
+  code: string;
+  id: string;
+  cancel: string;
+  orderCode: number;
+  status: string;
+}

@@ -1531,6 +1531,11 @@ path-scurry@^1.11.1:
     lru-cache "^10.2.0"
     minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
 
+payos-checkout@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/payos-checkout/-/payos-checkout-1.0.9.tgz"
+  integrity sha512-5QEc169pMh9ZIC2yqe+uVdBAr6OokYUKqAQH/y2q7waOnvKEfmDBEpLAc2+pW1x6YVXqAU20xPFx+EDE8bQo3g==
+
 picocolors@^1.0.0, picocolors@^1.0.1, picocolors@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.1.0.tgz"
