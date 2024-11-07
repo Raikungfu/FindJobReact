@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { API_GET_JOB_DETAIL, API_PUT_JOB } from "../../Service/JobAPI";
+import { API_GET_JOB_DETAIL } from "../../Service/JobAPI";
 import { useNavigate, useParams } from "react-router-dom";
 import { applyForJob } from "../../utils/jobUtils";
-import { FormDataOrOther } from "../../Types/constant";
 
 interface JobDetail_Response {
   EmployerId: number;

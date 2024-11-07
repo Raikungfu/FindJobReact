@@ -13,7 +13,6 @@ import JobServices from "./Pages/JobServices";
 import OrderHistory from "./Pages/Order";
 import PaymentSuccess from "./Pages/PaymentStatus/PaymentSuccess";
 import PaymentFail from "./Pages/PaymentStatus/PaymentFail";
-import ChatList from "./Components/Chat/ChatList";
 import ChatPage from "./Pages/Chat";
 
 const App = () => {

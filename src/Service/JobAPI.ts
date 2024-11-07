@@ -3,7 +3,7 @@ import AxiosApi from "../Configs/axios";
 import { errorData, FormDataOrOther } from "../Types/constant";
 
 export const API_GET_JOBS = <T>(formData: FormDataOrOther<T>): Promise<T> => {
-  return AxiosApi.get<T>(`/api/Job/outstanding-job`, formData)
+  return AxiosApi.get<T>(`/odata/Job/outstanding-job`, formData)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -19,7 +19,7 @@ export const API_GET_JOBS = <T>(formData: FormDataOrOther<T>): Promise<T> => {
 };
 
 export const API_GET_JOB_EMPLOYER = <T>(employerId?: number): Promise<T> => {
-  const url = `/api/Job/get-job-employer${
+  const url = `/odata/Job/get-job-employer${
     employerId ? `?employerId=${employerId}` : ""
   }`;
 
@@ -38,7 +38,7 @@ export const API_GET_JOB_EMPLOYER = <T>(employerId?: number): Promise<T> => {
     });
 };
 export const API_COUNT_JOBS = <T>(): Promise<number> => {
-  return AxiosApi.get<T>(`/api/Job/count-jobs`)
+  return AxiosApi.get<T>(`/odata/Job/count-jobs`)
     .then((response) => {
       if (response.data) {
         return response.data as unknown as number;
@@ -53,7 +53,7 @@ export const API_COUNT_JOBS = <T>(): Promise<number> => {
     });
 };
 export const API_GET_JOB_DETAIL = <T>(jobId: number): Promise<T> => {
-  return AxiosApi.get<T>(`/api/Job/${jobId}`)
+  return AxiosApi.get<T>(`/odata/Job/${jobId}`)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -68,7 +68,7 @@ export const API_GET_JOB_DETAIL = <T>(jobId: number): Promise<T> => {
     });
 };
 export const API_POST_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
-  return AxiosApi.post<T>(`/api/Job`, formData)
+  return AxiosApi.post<T>(`/odata/Job`, formData)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -83,7 +83,7 @@ export const API_POST_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
     });
 };
 export const API_PUT_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
-  return AxiosApi.put<T>(`/api/Job`, formData)
+  return AxiosApi.put<T>(`/odata/Job`, formData)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -98,7 +98,7 @@ export const API_PUT_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
     });
 };
 export const API_DELETE_JOB = <T>(jobId: number): Promise<T> => {
-  return AxiosApi.delete<T>(`/api/Job/${jobId}`)
+  return AxiosApi.delete<T>(`/odata/Job/${jobId}`)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -113,7 +113,7 @@ export const API_DELETE_JOB = <T>(jobId: number): Promise<T> => {
     });
 };
 export const API_GET_JOB_CATEGORIES = <T>(): Promise<T> => {
-  return AxiosApi.get<T>(`/api/Job/job-categories`)
+  return AxiosApi.get<T>(`/odata/Job/job-categories`)
     .then((response) => {
       if (response.data) {
         return response.data;

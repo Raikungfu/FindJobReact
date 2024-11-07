@@ -21,7 +21,7 @@ const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [employeeData, setEmployeeData] =
     useState<EmployeeProfile>(defaultProfile);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
 
   // const userType = JSON.parse(localStorage.getItem("User") || "{}").UserType;
   const [userType, setUserType] = useState<"Employee" | "Employer" | null>(
