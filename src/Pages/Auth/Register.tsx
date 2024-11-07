@@ -194,18 +194,16 @@ const Register: React.FC = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="Password"
+              htmlFor="birthDate"
               className="block text-gray-700 font-medium mb-2"
             >
               Ngày sinh
             </label>
             <input
-              type="password"
-              id="Password"
-              name="Password"
+              type="date"
+              id="birthDate"
+              name="birthDate"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="(Tối thiểu 6 ký tự)"
-              minLength={6}
               required
             />
           </div>
