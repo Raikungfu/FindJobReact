@@ -22,7 +22,9 @@ const UserHeader: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center p-4 px-6 lg:px-[10%]">
         {/* Logo Section */}
         <div className="flex items-center">
-          <h1 className="text-2xl font-bold">Jobby</h1>
+          <Link to="/" className="text-2xl font-bold">
+            FindJob
+          </Link>
         </div>
 
         {/* Desktop Navigation Links */}

@@ -13,7 +13,6 @@ const JobList: React.FC = () => {
   const [locationSearch, setLocationSearch] = useState("");
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       const searchJobs = (await API_GET_JOBS({

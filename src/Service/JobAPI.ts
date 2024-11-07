@@ -68,7 +68,7 @@ export const API_GET_JOB_DETAIL = <T>(jobId: number): Promise<T> => {
     });
 };
 export const API_POST_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
-  return AxiosApi.post<T>(`/api/Job`, formData)
+  return AxiosApi.post<T>(`/odata/Job`, formData)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -83,7 +83,7 @@ export const API_POST_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
     });
 };
 export const API_PUT_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
-  return AxiosApi.put<T>(`/api/Job`, formData)
+  return AxiosApi.put<T>(`/odata/Job`, formData)
     .then((response) => {
       if (response.data) {
         return response.data;
