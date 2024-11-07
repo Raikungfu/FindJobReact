@@ -19,7 +19,6 @@ const ChatWindow: React.FC<{ roomId: number }> = ({ roomId }) => {
 
   const handleSendMessage = () => {
     if (!message.trim()) return;
-    // Simulate sending a message by adding it to the messages list
     setMessages([...messages, { content: message, sender: "me" }]);
     setMessage("");
   };

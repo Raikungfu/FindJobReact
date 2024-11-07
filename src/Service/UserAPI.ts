@@ -2,8 +2,11 @@ import { AxiosError } from "axios";
 import AxiosApi from "../Configs/axios";
 import { errorData, FormDataOrOther } from "../Types/constant";
 
-export const API_GET_USER_PROFILE = <T>(): Promise<T> => {
-  return AxiosApi.get<T>(`/api/User/profile`)
+export const API_GET_USER_PROFILE = <T>(userId?: number): Promise<T> => {
+  const url = userId 
+    ? `/api/User/profile?userId=${userId}` // Truyền tham số userId qua query string
+    : `/api/User/profile`;
+  return AxiosApi.get<T>(url)
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -17,6 +20,7 @@ export const API_GET_USER_PROFILE = <T>(): Promise<T> => {
       throw error;
     });
 };
+
 
 export const API_GET_EMPLOYEE_INFO = <T>(id: number): Promise<T> => {
   return AxiosApi.get<T>(`/api/Employee/${id}`)
@@ -59,6 +63,19 @@ export const API_UPDATE_EMPLOYEE = async <T>(formData: FormDataOrOther<T>): Prom
     }
   } catch (error) {
     
+    return null; 
+  }
+};
+export const API_UPDATE_EMPLOYER = async <T>(formData: FormDataOrOther<T>): Promise<T | null> => {
+  try {
+    const response = await AxiosApi.put<T>(`/api/Employer/update`, formData);
+    
+    if (response.data) {
+      return response.data;
+    } else {
+      throw new Error("No data received from the update API");
+    }
+  } catch (error) {
     return null; 
   }
 };

@@ -84,7 +84,7 @@ const Home: React.FC = () => {
     <div className="pt-20 bg-white min-h-screen flex flex-col items-center justify-center text-center">
       {/* Header Section */}
       <h1 className="text-5xl font-extrabold text-gray-800 mt-10 font-big-shoulders">
-        JOBBY
+        FindJob
       </h1>
       <p className="text-3xl font-bold text-gray-800 mt-2 font-big-shoulders">
         Việc làm mê ly

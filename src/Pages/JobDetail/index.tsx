@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { API_GET_JOB_DETAIL } from "../../Service/JobAPI";
-import { useParams } from "react-router-dom";
+import { API_GET_JOB_DETAIL, API_PUT_JOB } from "../../Service/JobAPI";
+import { useNavigate, useParams } from "react-router-dom";
 import { applyForJob } from "../../utils/jobUtils";
+import { FormDataOrOther } from "../../Types/constant";
 
 interface JobDetail_Response {
+  EmployerId: number;
   JobId: number;
   Title: string;
   Description: string;
@@ -23,6 +25,8 @@ const JobDetail = () => {
   const [job, setJob] = useState<JobDetail_Response | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJobDetail = async () => {
@@ -42,18 +46,39 @@ const JobDetail = () => {
       }
     };
 
+    const fetchUser = () => {
+      // Lấy thông tin người dùng từ localStorage
+      const currentUser = JSON.parse(localStorage.getItem("User") || "{}");
+      setUser(currentUser);
+    };
+
     fetchJobDetail();
+    fetchUser();
   }, [jobId]);
 
   const handleApply = async (jobId: number) => {
     const success = await applyForJob(jobId);
     if (success) {
-      alert("Application successful!");
+      alert("Ứng tuyển thành công!");
     } else {
-      alert("Application failed. Please try again.");
+      alert("Ứng tuyển thất bại. Vui lòng thử lại.");
     }
   };
 
+  const handleEditJob = () => {
+    // Kiểm tra UserType là Employer và EmployerId khớp với UserId
+    if (
+      job &&
+      user &&
+      user.UserType === "Employer" &&
+      job.EmployerId === user.Id
+    ) {
+      navigate(`/edit-job/${job.JobId}`);
+    } else {
+      alert("Bạn không có quyền chỉnh sửa công việc này.");
+    }
+  };
+  console.log(user.Id);
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -67,7 +92,7 @@ const JobDetail = () => {
   if (error) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="text-red-500 text-center p-10">Error: {error}</div>
+        <div className="text-red-500 text-center p-10">Lỗi: {error}</div>
       </div>
     );
   }
@@ -75,7 +100,7 @@ const JobDetail = () => {
   if (!job) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="text-center p-10">No job details available.</div>
+        <div className="text-center p-10">Không có thông tin công việc.</div>
       </div>
     );
   }
@@ -111,6 +136,13 @@ const JobDetail = () => {
               })}{" "}
               VND
             </p>
+            <p className="text-lg font-semibold mb-2">
+              <strong>From:</strong>{" "}
+              {new Date(job.DateFrom).toLocaleDateString()}
+            </p>
+            <p className="text-lg font-semibold mb-2">
+              <strong>To:</strong> {new Date(job.DateTo).toLocaleDateString()}
+            </p>
             <div className="mt-6">
               <h2 className="text-2xl font-semibold mb-4">Description</h2>
               <p className="text-lg mb-6">{job.Description}</p>
@@ -125,13 +157,23 @@ const JobDetail = () => {
         </div>
         <div className="w-full xl:w-4/12 p-4">
           <div className="bg-white rounded-lg shadow-lg p-4">
-            <h2 className="text-2xl font-semibold mb-4">Apply Now</h2>
-            <button
-              className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
-              onClick={() => handleApply(job.JobId)}
-            >
-              Ứng Tuyển Ngay
-            </button>
+            {user && user.UserType === "Employer" && (
+              //&& job.EmployerId === user.Id
+              <button
+                className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 mt-4"
+                onClick={handleEditJob}
+              >
+                Chỉnh sửa Công việc
+              </button>
+            )}
+            {user && user.UserType === "Employee" && (
+              <button
+                className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
+                onClick={() => handleApply(job.JobId)}
+              >
+                Ứng Tuyển Ngay
+              </button>
+            )}
           </div>
         </div>
       </div>
