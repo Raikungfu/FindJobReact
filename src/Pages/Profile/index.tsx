@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  API_UPDATE_EMPLOYEE,
   API_GET_USER_PROFILE,
   API_GET_EMPLOYEE_INFO,
   API_GET_EMPLOYER_INFO,
@@ -17,9 +16,8 @@ const Profile: React.FC = () => {
   const [profile, setProfile] = useState<
     EmployeeProfile | EmployerProfile | null
   >(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [employeeData, setEmployeeData] =
-    useState<EmployeeProfile>(defaultProfile);
+  const [, setIsEditing] = useState(false);
+  const [, setEmployeeData] = useState<EmployeeProfile>(defaultProfile);
 
   const userType = JSON.parse(localStorage.getItem("User") || "{}").UserType;
   const navigate = useNavigate();

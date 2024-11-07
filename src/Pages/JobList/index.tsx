@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_COUNT_JOBS, API_GET_JOBS } from "../../Service/JobAPI";
+import { API_GET_JOBS } from "../../Service/JobAPI";
 import { JobList_Response } from "../../Types/job";
 import { JobType } from "../../Types/constant";
 import dayjs from "dayjs";
@@ -13,13 +13,7 @@ const JobList: React.FC = () => {
   const [locationSearch, setLocationSearch] = useState("");
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
-  const fetchJobsCount = async () => {
-    try {
-      const count = await API_COUNT_JOBS();
-    } catch (error) {
-      console.error("Error fetching job count:", error);
-    }
-  };
+
   useEffect(() => {
     const fetchData = async () => {
       const searchJobs = (await API_GET_JOBS({
@@ -53,15 +47,11 @@ const JobList: React.FC = () => {
       setCurrentPage(nextPage); // Tăng trang hiện tại sau khi load thêm
     }
     setLoading(false);
-    fetchJobsCount();
   };
   const handleViewDetails = (jobId: number) => {
     navigate(`/job/${jobId}`);
   };
-  const handleSearch = () => {
-    setCurrentPage(0);
-    fetchJobsCount();
-  };
+
   const handleApply = async (jobId: number) => {
     const success = await applyForJob(jobId);
     if (success) {

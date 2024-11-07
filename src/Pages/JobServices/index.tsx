@@ -3,17 +3,16 @@ import Modal from "../../Components/Modal";
 import { JobService } from "../../Types/jobService";
 import {
   API_GET_JOBS_SERVICE,
-  API_GET_PAYMENT_VNPAY,
   API_POST_ORDER,
 } from "../../Service/JobServiceApi";
 import JobServiceList from "../../Components/JobService";
-import { Order } from "../../Types/order";
+import { Order, PaymentResponse } from "../../Types/order";
 import { useError } from "../../Context/ErrorProvider";
 import { useSuccess } from "../../Context/SuccessProvider";
-
-interface PaymentResponse {
-  paymentUrl: string;
-}
+import {
+  API_GET_PAYMENT_PAYOS,
+  API_GET_PAYMENT_VNPAY,
+} from "../../Service/PaymentAPI";
 
 const JobServices: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -21,8 +20,10 @@ const JobServices: React.FC = () => {
   const [selectedJob, setSelectedJob] = useState<JobService | null>(null);
   const { setError } = useError();
   const { setSuccess } = useSuccess();
-
   const [jobServices, setJobServices] = useState<JobService[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState<string>("DomesticCard");
+
+  let paymentWindow: Window | null = null;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,8 +44,6 @@ const JobServices: React.FC = () => {
     fetchData();
   }, []);
 
-  const [paymentMethod, setPaymentMethod] = useState<string>("DomesticCard");
-
   const handleOrder = async () => {
     const order = (await API_POST_ORDER({
       JobServiceId: selectedJob?.JobServiceId,
@@ -61,14 +60,27 @@ const JobServices: React.FC = () => {
           formData.append(key, value)
         );
 
-        const response = (await API_GET_PAYMENT_VNPAY(
-          formData
-        )) as unknown as PaymentResponse;
+        var response: PaymentResponse;
+        if (paymentMethod === "PayOS") {
+          response = (await API_GET_PAYMENT_PAYOS(
+            formData
+          )) as unknown as PaymentResponse;
 
-        if (response.paymentUrl) {
-          openVnPayPopup(response.paymentUrl);
+          if (response.paymentUrl) {
+            openCheckoutPopup(response.paymentUrl, "Thanh toán PayOS");
+          } else {
+            setError("Failed to generate payment link. Please try again.");
+          }
         } else {
-          setError("Failed to generate payment link. Please try again.");
+          response = (await API_GET_PAYMENT_VNPAY(
+            formData
+          )) as unknown as PaymentResponse;
+
+          if (response.paymentUrl) {
+            openCheckoutPopup(response.paymentUrl, "Thanh toán VNPay");
+          } else {
+            setError("Failed to generate payment link. Please try again.");
+          }
         }
       } catch (error) {
         console.error("Payment error:", error);
@@ -97,25 +109,8 @@ const JobServices: React.FC = () => {
       </div>
     );
 
-  function openVnPayPopup(paymentUrl: string) {
-    var width = 600;
-    var height = 700;
-    var left = (screen.width - width) / 2;
-    var top = (screen.height - height) / 2;
-
-    var paymentWindow = window.open(
-      paymentUrl,
-      "VnPayPayment",
-      `width=${width},height=${height},top=${top},left=${left}`
-    );
-
-    if (
-      !paymentWindow ||
-      paymentWindow.closed ||
-      typeof paymentWindow.closed == "undefined"
-    ) {
-      alert("Vui lòng cho phép popup để thanh toán.");
-    }
+  function openCheckoutPopup(paymentUrl: string, paymentType: string) {
+    checkout(paymentUrl, paymentType);
 
     window.addEventListener("message", function (event) {
       if (event.data.status === "success") {
@@ -129,6 +124,25 @@ const JobServices: React.FC = () => {
       }
     });
   }
+
+  const checkout = (paymentUrl: string, paymentType: string) => {
+    var width = 600;
+    var height = 700;
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
+
+    var paymentWindow = window.open(
+      paymentUrl,
+      paymentType,
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
+
+    if (paymentWindow) {
+      paymentWindow.focus();
+    } else {
+      setError("Please allow popups for this website.");
+    }
+  };
 
   return (
     <div className="mt-5 pt-20 min-h-screen flex flex-col items-center bg-gray-100">
@@ -195,6 +209,17 @@ const JobServices: React.FC = () => {
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   International Card
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="PayOS"
+                    className="mr-4"
+                    checked={paymentMethod === "PayOS"}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  PayOS
                 </label>
               </div>
             </div>
