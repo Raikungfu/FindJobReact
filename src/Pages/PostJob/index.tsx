@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { JobCategory_Response } from "../../Types/job";
 import useUser from "../../Hooks/useUser";
 import { JobLocation } from "../../Types/constant";
-import { AxiosError } from "axios";
 
 interface PostJobForm {
   title: string;
@@ -118,6 +117,7 @@ const PostJob: React.FC = () => {
         console.log(error.message);
         if (error.message == "403") {
           setShowServiceRedirect(true);
+          console.log(showServiceRedirect);
         }
       }
       throw new Error("Đã xảy ra lỗi không xác định.");
@@ -150,12 +150,7 @@ const PostJob: React.FC = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         {/* Modal hoặc thông báo với nút */}
-        {showServiceRedirect && (
-          <div className="modal">
-            <p>Bạn không còn dịch vụ đăng tuyển nào. Hãy mua thêm dịch vụ.</p>
-            <Link to="/dich-vu">Đi đến Dịch vụ</Link>
-          </div>
-        )}
+
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -361,6 +356,24 @@ const PostJob: React.FC = () => {
             </div>
           </div>
         )}
+        {showServiceRedirect && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
+            <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
+              <h2 className="text-xl font-semibold text-center mb-4">
+                Bạn không còn dịch vụ đăng tuyển nào. Hãy mua thêm dịch vụ.
+              </h2>
+              <div className="flex justify-center">
+                <Link
+                  className="bg-green-500 text-white w-full py-2 rounded-lg font-semibold hover:bg-green-600 text-center max-w-xs"
+                  to="/dich-vu"
+                >
+                  Đi đến Dịch vụ
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Message for employee */}
         {isEmployee && error && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
