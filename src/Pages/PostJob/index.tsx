@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { API_GET_JOB_CATEGORIES, API_POST_JOB } from "../../Service/JobAPI"; // API để post job
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { JobCategory_Response } from "../../Types/job";
 import useUser from "../../Hooks/useUser";
 import { JobLocation } from "../../Types/constant";
+import { AxiosError } from "axios";
 
 interface PostJobForm {
   title: string;
@@ -40,6 +41,8 @@ const PostJob: React.FC = () => {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isEmployee, setIsEmployee] = useState(false);
+  const [showServiceRedirect, setShowServiceRedirect] = useState(false);
+
   const userData = localStorage.getItem("User");
   const parsedUser = userData ? JSON.parse(userData) : null;
   useEffect(() => {
@@ -89,7 +92,6 @@ const PostJob: React.FC = () => {
     }));
   };
 
-  console.log(parsedUser.UserType);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -112,8 +114,13 @@ const PostJob: React.FC = () => {
         setShowSuccessPopup(true);
       }
     } catch (error) {
-      console.error(error);
-      setError("Error posting the job. Please try again.");
+      if (error instanceof Error) {
+        console.log(error.message);
+        if (error.message == "403") {
+          setShowServiceRedirect(true);
+        }
+      }
+      throw new Error("Đã xảy ra lỗi không xác định.");
     } finally {
       setIsSubmitting(false);
     }
@@ -140,10 +147,15 @@ const PostJob: React.FC = () => {
           Điền các thông tin chi tiết về công việc cần tuyển
         </p>
 
-        {error && (
-          <div className="bg-red-100 text-red-700 p-3 mb-4">{error}</div>
-        )}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
+        {/* Modal hoặc thông báo với nút */}
+        {showServiceRedirect && (
+          <div className="modal">
+            <p>Bạn không còn dịch vụ đăng tuyển nào. Hãy mua thêm dịch vụ.</p>
+            <Link to="/dich-vu">Đi đến Dịch vụ</Link>
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

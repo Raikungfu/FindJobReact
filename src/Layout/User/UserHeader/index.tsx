@@ -60,9 +60,9 @@ const UserHeader: React.FC = () => {
             Đăng công việc
           </Link>
           <Link
-            to="/dich-vu-viec-lam"
+            to="/dich-vu"
             className={
-              isActive("/dich-vu-viec-lam")
+              isActive("/dich-vu")
                 ? "text-green-600 font-semibold"
                 : "hover:text-green-500"
             }
@@ -217,9 +217,9 @@ const UserHeader: React.FC = () => {
               Đăng công việc
             </Link>
             <Link
-              to="/dich-vu-viec-lam"
+              to="/dich-vu"
               className={
-                isActive("/dich-vu-viec-lam")
+                isActive("/dich-vu")
                   ? "text-green-600 font-semibold"
                   : "hover:text-green-500"
               }

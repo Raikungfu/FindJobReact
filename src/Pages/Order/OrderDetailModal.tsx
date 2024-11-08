@@ -127,7 +127,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 Chọn phương thức thanh toán
               </h3>
               <div className="flex flex-col">
-                <label>
+                {/* <label>
                   <input
                     type="radio"
                     name="paymentMethod"
@@ -159,7 +159,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   Thẻ quốc tế/VISA
-                </label>
+                </label> */}
                 <label>
                   <input
                     type="radio"

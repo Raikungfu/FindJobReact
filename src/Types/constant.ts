@@ -13,6 +13,7 @@ export type FormDataOrOther<T> = T;
 export interface errorData {
   error?: string;
   status?: number;
+  message?: string;
 }
 
 export enum JobType {

@@ -177,7 +177,7 @@ const JobServices: React.FC = () => {
                 Chọn Phương Thức Thanh Toán
               </h3>
               <div className="flex flex-col">
-                <label>
+                {/* <label>
                   <input
                     type="radio"
                     name="paymentMethod"
@@ -209,7 +209,7 @@ const JobServices: React.FC = () => {
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   International Card
-                </label>
+                </label> */}
                 <label>
                   <input
                     type="radio"
@@ -219,7 +219,7 @@ const JobServices: React.FC = () => {
                     checked={paymentMethod === "PayOS"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  PayOS
+                  QRCode
                 </label>
               </div>
             </div>

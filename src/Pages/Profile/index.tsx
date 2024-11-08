@@ -7,20 +7,13 @@ import {
   API_UPDATE_EMPLOYEE,
 } from "../../Service/UserAPI";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  EmployeeProfile,
-  EmployerProfile,
-  defaultProfile,
-} from "../../Types/user";
+import { ProfileUser, defaultProfile } from "../../Types/user";
 
 const Profile: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
-  const [profile, setProfile] = useState<
-    EmployeeProfile | EmployerProfile | null
-  >(null);
+  const [profile, setProfile] = useState<ProfileUser | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [employeeData, setEmployeeData] =
-    useState<EmployeeProfile>(defaultProfile);
+  const [employeeData, setEmployeeData] = useState<ProfileUser>(defaultProfile);
   const [, setLoading] = useState(false);
 
   // const userType = JSON.parse(localStorage.getItem("User") || "{}").UserType;
@@ -34,10 +27,12 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const userProfileData: EmployeeProfile | EmployerProfile =
-          await API_GET_USER_PROFILE(id ? Number(id) : undefined);
+        const userProfileData: ProfileUser = await API_GET_USER_PROFILE(
+          id ? Number(id) : undefined
+        );
         setProfile(userProfileData);
 
+        // Dựa trên dữ liệu trả về, xác định userType
         if ("EmployeeId" in userProfileData) {
           setUserType("Employee");
         } else {
@@ -53,13 +48,13 @@ const Profile: React.FC = () => {
   //   const fetchProfile = async () => {
   //     try {
   //       if (userType === "Employee") {
-  //         const employeeData: EmployeeProfile = id
+  //         const employeeData: Profile = id
   //           ? await API_GET_EMPLOYEE_INFO(Number(id))
   //           : await API_GET_USER_PROFILE();
   //         setProfile(employeeData);
   //         setEmployeeData(employeeData);
   //       } else if (userType === "Employer") {
-  //         const employerData: EmployerProfile = id
+  //         const employerData: Profile = id
   //           ? await API_GET_EMPLOYER_INFO(Number(id))
   //           : await API_GET_USER_PROFILE();
   //         setProfile(employerData);
@@ -119,7 +114,7 @@ const Profile: React.FC = () => {
       }
 
       // Re-fetch the updated profile to display updated information
-      const updatedProfile: EmployeeProfile | EmployerProfile = id
+      const updatedProfile: ProfileUser = id
         ? userType === "Employee"
           ? await API_GET_EMPLOYEE_INFO(Number(id))
           : await API_GET_EMPLOYER_INFO(Number(id))
@@ -128,7 +123,7 @@ const Profile: React.FC = () => {
       // Set profile and employee data with updated information
       setProfile(updatedProfile);
       if (userType === "Employee") {
-        setEmployeeData(updatedProfile as EmployeeProfile);
+        setEmployeeData(updatedProfile as ProfileUser);
       }
       setIsEditing(false); // Exit editing mode
     } catch (error) {
@@ -137,19 +132,19 @@ const Profile: React.FC = () => {
       setLoading(false);
     }
   };
-  const renderEmployeeDetails = (profile: EmployeeProfile) => (
+  const renderEmployeeDetails = (profile: ProfileUser) => (
     <div className="space-y-6">
       <div className="bg-white p-4 rounded-lg shadow-md">
         <h3 className="text-xl font-semibold text-gray-800">Skills</h3>
         {isEditing ? (
           <textarea
             name="Skills"
-            value={employeeData.Skills}
+            value={employeeData.employee?.Skills}
             onChange={handleInputChange}
             className="w-full border p-2 rounded"
           />
         ) : (
-          <p className="text-gray-600">{profile.Skills}</p>
+          <p className="text-gray-600">{profile.employee?.Skills}</p>
         )}
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md">
@@ -157,12 +152,12 @@ const Profile: React.FC = () => {
         {isEditing ? (
           <textarea
             name="Education"
-            value={employeeData.Education}
+            value={employeeData.employee?.Education}
             onChange={handleInputChange}
             className="w-full border p-2 rounded"
           />
         ) : (
-          <p className="text-gray-600">{profile.Education}</p>
+          <p className="text-gray-600">{profile.employee?.Education}</p>
         )}
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md">
@@ -171,7 +166,7 @@ const Profile: React.FC = () => {
           <input
             type="text"
             name="Phone"
-            value={employeeData.Phone}
+            value={employeeData.employee?.Phone}
             onChange={handleInputChange}
             className="w-full border p-2 rounded"
           />
@@ -182,7 +177,7 @@ const Profile: React.FC = () => {
     </div>
   );
 
-  const renderEmployerDetails = (profile: EmployerProfile) => (
+  const renderEmployerDetails = (profile: ProfileUser) => (
     <div className="space-y-6">
       <div className="bg-white p-4 rounded-lg shadow-md">
         <h3 className="text-xl font-semibold text-gray-800">Company Name</h3>
@@ -190,12 +185,12 @@ const Profile: React.FC = () => {
           <input
             type="text"
             name="CompanyName"
-            value={profile.CompanyName}
+            value={profile.employer?.CompanyName}
             onChange={handleInputChange}
             className="w-full border p-2 rounded"
           />
         ) : (
-          <p className="text-gray-600">{profile.CompanyName}</p>
+          <p className="text-gray-600">{profile.employer?.CompanyName}</p>
         )}
       </div>
       <div className="bg-white p-4 rounded-lg shadow-md">
@@ -203,12 +198,12 @@ const Profile: React.FC = () => {
         {isEditing ? (
           <textarea
             name="Description"
-            value={profile.Description}
+            value={profile.employer?.Description}
             onChange={handleInputChange}
             className="w-full border p-2 rounded"
           />
         ) : (
-          <p className="text-gray-600">{profile.Description}</p>
+          <p className="text-gray-600">{profile.employer?.Description}</p>
         )}
       </div>
     </div>
@@ -242,9 +237,9 @@ const Profile: React.FC = () => {
               <div className="flex-1">
                 <h1 className="text-2xl font-bold">
                   {userType === "Employer"
-                    ? (profile as EmployerProfile)?.Name
-                    : `${(profile as EmployeeProfile)?.FirstName} ${
-                        (profile as EmployeeProfile)?.LastName
+                    ? (profile as ProfileUser)?.employer?.Name
+                    : `${(profile as ProfileUser)?.employee?.FirstName} ${
+                        (profile as ProfileUser)?.employee?.LastName
                       }`}
                 </h1>
               </div>
@@ -268,9 +263,9 @@ const Profile: React.FC = () => {
 
           <div className=" w-full max-w-5xl min-h-screen bg-gray-50 p-6">
             {userType === "Employee" &&
-              renderEmployeeDetails(profile as EmployeeProfile)}
+              renderEmployeeDetails(profile as ProfileUser)}
             {userType === "Employer" &&
-              renderEmployerDetails(profile as EmployerProfile)}
+              renderEmployerDetails(profile as ProfileUser)}
           </div>
         </>
       )}

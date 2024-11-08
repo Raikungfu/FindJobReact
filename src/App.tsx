@@ -27,7 +27,7 @@ const App = () => {
         <Route path="job/:jobId" element={<JobDetail />} />
         <Route path="profile" element={<Profile />} />
         <Route path="my-posts" element={<ManageJobs />} />
-        <Route path="dich-vu-viec-lam" element={<JobServices />} />
+        <Route path="dich-vu" element={<JobServices />} />
         <Route path="profile/:id" element={<Profile />} />
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="payment-success" element={<PaymentSuccess />} />

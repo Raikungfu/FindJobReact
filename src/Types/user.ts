@@ -78,3 +78,13 @@ export interface EmployerProfile {
   CiBehind?: string; // Company Identification Behind
   UserId: number;
 }
+export interface ProfileUser {
+  employer?: EmployerProfile,
+  employee?: EmployeeProfile,
+  Email?: String,
+  Phone?: String,
+  UserType?: String,
+  UserId?: number,
+  Username?: String,
+  Gender?: String,
+}

@@ -74,13 +74,10 @@ export const API_POST_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
         return response.data;
       } else {
         const error = response.error as AxiosError;
-        const x = error.response?.data as errorData;
-        throw new Error(x.error || "Input not correct!");
+        throw new Error(error.status?.toString() || "Error to Post Job");
       }
     })
-    .catch((error) => {
-      throw error;
-    });
+  
 };
 export const API_PUT_JOB = <T>(formData: FormDataOrOther<T>): Promise<T> => {
   return AxiosApi.put<T>(`/odata/Job`, formData)
